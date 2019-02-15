@@ -1,0 +1,18 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/.vs
+/blc-frontend.API/.vs/config/applicationhost.config
+/blc-frontend.API/.vs/config
+/blc-frontend.API/.vs/blc-frontend.API/v15/Server/sqlite3/storage.ide-wal
+/blc-frontend.API/.vs/blc-frontend.API/v15/Server/sqlite3/storage.ide-shm
+/blc-frontend.API/.vs/blc-frontend.API/v15/Server/sqlite3/storage.ide
+/blc-frontend.API/.vs/blc-frontend.API/v15/Server/sqlite3/db.lock
+/blc-frontend.API/.vs/blc-frontend.API/v15/Server/sqlite3
+/blc-frontend.API/.vs
+/blc-frontend.API/blc-frontend.API/bin/
+/blc-frontend.API/blc-frontend.API/obj/
+/blc-frontend.API/packages/NLog.4.5.11/lib
+/blc-frontend.API/packages/NLog.4.5.11/NLog.4.5.11.nupkg
+/blc-frontend.API/packages/NLog.4.5.11/.signature.p7s

@@ -2,7 +2,7 @@
   <div>
     <v-toolbar color="primary" dark fixed app>
       <!-- <v-toolbar-side-icon @click.stop="visible = !visible"></v-toolbar-side-icon> -->
-      <v-toolbar-title>Portfolio</v-toolbar-title>
+      <v-toolbar-title>{{ headerName }}</v-toolbar-title>
     </v-toolbar>
     <!-- <v-navigation-drawer
       v-model="visible"
@@ -36,6 +36,10 @@ export default {
       { icon: 'edit', name: 'プロフィール編集', route: { name: 'profile' } }
     ]
   })
+  ,
+  props: {
+    headerName: String
+  }
 }
 </script>
 

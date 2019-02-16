@@ -1,9 +1,11 @@
 <template>
   <div>
-    <app-header />
+    <app-header 
+      :headerName="headerName"
+    />
     <v-content>
       <slot />
-      <app-fab />
+      <app-fab v-if="isUser"/>
     </v-content>
   </div>
 </template>
@@ -16,6 +18,10 @@ export default {
   components: {
     AppHeader,
     AppFab
+  },
+  props: {
+    headerName: String,
+    isUser: Boolean
   }
 }
 </script>

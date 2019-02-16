@@ -77,5 +77,12 @@ namespace frontend.API.Controllers
             //return await _profileService.GetProofListByProfileAddressesToShow(addresses);//TODO: テスト不足で不安なため暫定コメントアウト
             return await _profileService.GetProofListByProfileAddresses(addresses);
         }
+
+        [HttpOptions]
+        [Route("send")]
+        public void Options()
+        {
+
+        }
     }
 }

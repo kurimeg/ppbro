@@ -38,7 +38,7 @@ namespace frontend.API.Controllers
             param["pubKey"] = request.PubKey;
             param["profileAddressList"] = request.ProfileAddressList;
 
-            return await _repository.SendProofs(param);
+             await _repository.SendProofs(param);
         }
     }
 }

@@ -16,3 +16,8 @@
 /blc-frontend.API/packages/NLog.4.5.11/lib
 /blc-frontend.API/packages/NLog.4.5.11/NLog.4.5.11.nupkg
 /blc-frontend.API/packages/NLog.4.5.11/.signature.p7s
+/frontend.API/packages/NLog.4.5.11
+/frontend.API/blc-frontend.API/obj/Debug
+/frontend.API/blc-frontend.API/bin
+/frontend.API/blc-frontend.API
+/frontend.API/.vs/frontend.API/v15/Server/sqlite3

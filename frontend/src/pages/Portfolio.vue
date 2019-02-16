@@ -60,10 +60,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchProofs: 'certificate/fetchProofs'
+      fetchPublishedProofs: 'certificate/fetchPublishedProofs'
     }),
     initialize: function () {
-      this.fetchProofs()
+      this.fetchPublishedProofs()
     }
   }
 }

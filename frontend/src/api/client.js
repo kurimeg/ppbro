@@ -76,6 +76,16 @@ export default {
           reject(new Error(err.message))
         })
     })
+  },
+
+  fetchPublishedProofs: sharer => {
+    return new Promise((resolve, reject) => {
+      client.post('/proof/show', sharer)
+        .then(res => resolve({ proofs: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
   }
 
 }

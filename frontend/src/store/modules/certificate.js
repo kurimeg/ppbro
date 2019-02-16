@@ -91,9 +91,25 @@ const actions = {
       commit('setSendResult', sendResult)
     })
   },
-  shareCertificate ({ commit }) {
-    return new Promise((resolve, reject) => {
-      resolve()
+  fetchPublishedProofs ({ commit }) {
+    const sharer = {
+      Token: 'MzJiNmFlMmEtYWRlOS00ODA4LWJhNDctMTk2NjAxNDk3YWY2',
+      PrivateKey: 'ii7+c9qCfoZoI1tHda/8AqNXl//FdAXFdcmUnmDJXIs='
+    }
+
+    apiClient.fetchPublishedProofs(sharer).then(respons => {
+      console.log(respons)
+      const proofs = respons.proofs.map(item => {
+        return {
+          issuerName: item.OrgName,
+          issueDate: item.DateTime,
+          detail: '',
+          type: item.Value,
+          issuerSign: item.Verified,
+          userSign: ''
+        }
+      })
+      commit('setCertificates', proofs)
     })
   }
 }

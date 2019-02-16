@@ -36,6 +36,24 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
+  fetchRequests ({ commit }) {
+    apiClient.fetchRequests().then(response => {
+      console.log(response)
+      const account = JSON.parse(localStorage.getItem('account'))
+      const proofs = response.proofs.filter(item => item.OrgSign === '').map(item => {
+        return {
+          address: item.Address,
+          issuerName: account.name + ' ' + account.nameEng,
+          issueDate: '',
+          detail: '卒業証明',
+          type: '取得',
+          issuerSign: item.MySign,
+          userSign: ''
+        }
+      })
+      commit('setCertificates', proofs)
+    })
+  },
   requestIssue ({ commit }) {
     apiClient.requestIssue({ address: 'U9F1B20C8E6DD429A90C090BF39334934' }).then(response => {
       console.log(response)
@@ -75,9 +93,32 @@ const actions = {
       commit('setSendResult', sendResult)
     })
   },
-  shareCertificate ({ commit }) {
-    return new Promise((resolve, reject) => {
-      resolve()
+  fetchPublishedProofs ({ commit }) {
+    const sharer = {
+      Token: 'MzJiNmFlMmEtYWRlOS00ODA4LWJhNDctMTk2NjAxNDk3YWY2',
+      PrivateKey: 'ii7+c9qCfoZoI1tHda/8AqNXl//FdAXFdcmUnmDJXIs='
+    }
+
+    apiClient.fetchPublishedProofs(sharer).then(respons => {
+      console.log(respons)
+      const proofs = respons.proofs.map(item => {
+        return {
+          issuerName: item.OrgName,
+          issueDate: item.DateTime,
+          detail: '',
+          type: item.Value,
+          issuerSign: item.Verified,
+          userSign: ''
+        }
+      })
+      commit('setCertificates', proofs)
+    })
+  },
+
+  issueProofs ({ commit }, param) {
+    apiClient.issueProofs(param).then(response => {
+      console.log(response)
+      this.fetchRequests()
     })
   }
 }

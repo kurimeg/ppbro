@@ -23,12 +23,12 @@
             </v-avatar>
             {{ certificate.issuerSign ? '発行者承認済': '発行者要求中' }}
           </v-chip>
-          <v-chip :color="certificate.userSign ? 'accent': 'secondary'" text-color="white">
+          <!-- <v-chip :color="certificate.userSign ? 'accent': 'secondary'" text-color="white">
             <v-avatar>
               <v-icon>check_circle</v-icon>
             </v-avatar>
             {{ certificate.userSign ? '本人確認済': '本人確認中' }}
-          </v-chip>
+          </v-chip> -->
         </v-flex>
       </v-layout>
     </v-timeline-item>

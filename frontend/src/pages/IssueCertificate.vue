@@ -14,8 +14,8 @@
           <v-data-table
               v-model="selected"
               :headers="headers"
-              :items="requests"
-              item-key="userName"
+              :items="certificates"
+              item-key="address"
               select-all
               class="elevation-1"
             >
@@ -27,7 +27,7 @@
                     hide-details
                   ></v-checkbox>
                 </td>
-                <td>{{ props.item.userName }}</td>
+                <td>{{ props.item.issuerName }}</td>
               </template>
             </v-data-table>
         </v-flex>
@@ -58,20 +58,21 @@ export default {
         {
           text: '要求者名',
           align: 'left',
-          value: 'userName'
+          value: 'issuerName'
         }
       ],
     }
   },
   computed: {
-    ...mapState('certificate', ['requests'])
+    ...mapState('certificate', ['certificates'])
   },
   created: function () {
     this.initialize()
   },
   methods: {
     ...mapActions({
-      fetchRequests: 'certificate/fetchRequests'
+      fetchRequests: 'certificate/fetchRequests',
+      issueProofs: 'certificate/issueProofs'
     }),
     initialize: function () {
       this.fetchRequests()
@@ -89,7 +90,7 @@ export default {
       }
     },
     onIssue () {
-
+      this.issueProofs(this.selected)
     }
   }
 }

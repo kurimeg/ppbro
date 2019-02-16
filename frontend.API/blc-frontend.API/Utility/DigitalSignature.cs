@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography;
 
-namespace frontend.API.Services
+namespace frontend.API.Utility
 {
     /// <summary>
     /// 思いっきり https://qiita.com/yoship1639/items/6dd0cc8623d7f3969d78
@@ -90,6 +90,18 @@ namespace frontend.API.Services
         public bool Verify(byte[] data, byte[] sign)
         {
             return dsa.VerifyData(data, sign, HashAlgorithmName.SHA256);
+        }
+
+        //TODO
+        public static byte[] Encrypt(byte[] data, byte[] key)
+        {
+            return data;
+        }
+
+        //TODO
+        public static byte[] Decrypt(byte[] data, byte[] key)
+        {
+            return data;
         }
     }
 }

@@ -1,25 +1,6 @@
 import client from './index'
 
 export default {
-  login: authInfo => {
-    return new Promise((resolve, reject) => {
-      client.post('/auth/login', authInfo)
-        .then(res => resolve({ token: res.data.token, userId: res.data.userId }))
-        .catch(err => {
-          reject(new Error(err.response.data.message || err.message))
-        })
-    })
-  },
-
-  logout: token => {
-    return new Promise((resolve, reject) => {
-      client.delete('/auth/logout', { headers: { 'x-kbn-token': token } })
-        .then(() => resolve())
-        .catch(err => {
-          reject(new Error(err.response.data.message || err.message))
-        })
-    })
-  },
 
   fetchProofs: profiles => {
     return new Promise((resolve, reject) => {
@@ -71,6 +52,23 @@ export default {
         profileAddressList: ['d8a6f80a-a099-488c-afc0-c22dd63dd457', 'd8a6f80a-a099-488c-afc0-c22dd63dd457']
         // profileAddressList: param.certificateKeys
       })
+        .then(res => resolve({ send: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
+  },
+
+  issueProofs: param => {
+    return new Promise((resolve, reject) => {
+      client.post('/proof', param.map(item => {
+        return {
+          profileAddress: item.address,
+          value: '卒業証明　取得',
+          privateKey: item.privateKey,
+          issuerAddress: 'U4F1B20C8E6DD429A90C090BF39334934'
+        }
+      }))
         .then(res => resolve({ send: res }))
         .catch(err => {
           reject(new Error(err.message))

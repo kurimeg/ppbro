@@ -41,5 +41,12 @@ namespace frontend.API.Controllers
         {
             return await service.CreateProfile(issuer.Address);
         }
+
+        [HttpOptions]
+        [Route("profile")]
+        public void Options()
+        {
+
+        }
     }
 }

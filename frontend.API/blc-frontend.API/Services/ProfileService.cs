@@ -42,7 +42,7 @@ namespace frontend.API.Services
             Issuer issuer = issuers.Where(x => x.Address == param.IssuerAddress).Select(x => x).FirstOrDefault();
             Profile profile = (await repo.GetProfileByAddresses(new string[] { address })).FirstOrDefault();
             DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(param.PrivateKey), Convert.FromBase64String(issuer.Pubkey));
-            byte[] signedValue = ds.Sign(EncodingUtil.GetEncoding().GetBytes(value));//エンコーディング要確認
+            byte[] signedValue = ds.Sign(EncodingUtil.GetEncoding().GetBytes(value));
 
             await repo.IssueProof(id, address, value, Convert.ToBase64String(signedValue));
         }

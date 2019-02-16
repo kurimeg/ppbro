@@ -44,7 +44,7 @@ namespace frontend.API.Controllers
                 Convert.FromBase64String(destination.PrivateKey), 
                 Convert.FromBase64String(destination.PublicKey));
             var joindAddresses = string.Join(", ", request.ProfileAddressList);
-            byte[] signedValue = signature.Sign(EncodingUtil.GetEncoding.GetBytes(joindAddresses));
+            byte[] signedValue = signature.Sign(EncodingUtil.GetEncoding().GetBytes(joindAddresses));
 
             // send profile addresses
             var param = new Hashtable();
@@ -58,7 +58,7 @@ namespace frontend.API.Controllers
 
             // create access token
             // TODO: encrypted token by company private key
-            byte[] encrypted = DigitalSignature.Encrypt(EncodingUtil.GetEncoding.GetBytes(joindAddresses), Convert.FromBase64String(destination.PrivateKey));
+            byte[] encrypted = DigitalSignature.Encrypt(EncodingUtil.GetEncoding().GetBytes(joindAddresses), Convert.FromBase64String(destination.PrivateKey));
             var token = Convert.ToBase64String(encrypted);
             return new {
                 AccessToken = token,

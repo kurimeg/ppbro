@@ -41,18 +41,7 @@ namespace frontend.API.Controllers
             var token = Convert.FromBase64String(param.Token);
             var key = Convert.FromBase64String(param.PrivateKey);
             string joinedAddresses = EncodingUtil.GetEncoding().GetString(DigitalSignature.Decrypt(token, key));
-            //joinedAddresses.Split(',').SelectMany(async address =>
-            //   {
-            //       Profile profile = await service.GetProfile(address);
-            //       return profile.Proof;
-            //   });
-            var list = new List<ProofResult>();
-            //foreach (string address in joinedAddresses.Split(','))
-            //{
-            //    Profile profile = await service.GetProfile(address);
-            //    if (profile.Proof != null) list.AddRange(profile.Proof);
-            //}
-            return list;
+            return await service.GetProofListByProfileAddresses(joinedAddresses.Split(','));
         }
     }
 }

@@ -186,7 +186,7 @@
     <Compile Include="Models\Blockchain\RequestProfile.cs" />
     <Compile Include="Models\UI\SendProofRequest.cs" />
     <Compile Include="Models\UI\UserProfile.cs" />
-    <Compile Include="Models\UI\UserProof.cs" />
+    <Compile Include="Models\UI\IssueProofRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IwaRepository.cs" />
     <Compile Include="Services\BlockchainRepository.cs" />

@@ -13,5 +13,6 @@ namespace frontend.API.Models.UI
         public string DateTime;
         public string Value;
         public string OrgName;
+        public string LimitDate;
     }
 }

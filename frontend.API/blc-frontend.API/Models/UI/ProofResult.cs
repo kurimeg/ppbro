@@ -7,9 +7,10 @@ namespace frontend.API.Models.UI
 {
     public class ProofResult
     {
+        public string ProfileAddress;
         public string Id;
         public bool Verified;
-        public DateTime DateTime;
+        public string DateTime;
         public string Value;
         public string OrgName;
     }

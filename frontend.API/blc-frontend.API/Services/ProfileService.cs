@@ -58,24 +58,27 @@ namespace frontend.API.Services
             var encoding = EncodingUtil.GetEncoding();
             var issuers = await iwarepo.GetIssuers();
             var profiles = await repo.GetProfileByAddresses(addresses);
-            foreach (var profile in profiles)
-            {
+
+            return profiles.SelectMany(profile => {
                 var issuer = issuers.Where(x => x.Address == profile.OrgAddress).FirstOrDefault();
                 var orgName = issuer.Name;
                 var publickey = issuer.Pubkey;
                 DigitalSignature signature = DigitalSignature.FromKey(Convert.FromBase64String(publickey));
-                foreach (var proof in profile.Proof)
+                return profile.Proof.Select(proof =>
                 {
-                    list.Add(new ProofResult {
-                        DateTime = proof.DateTime,
+                    return new ProofResult
+                    {
+                        ProfileAddress = profile.Address,
+                        DateTime = proof.DateTime.ToString("yyyy-MM-dd"),
                         Id = proof.Id,
                         OrgName = orgName,
                         Value = proof.Value,
-                        Verified = signature.Verify(encoding.GetBytes(proof.Value), Convert.FromBase64String(proof.OrgSign))
-                    });
-                }
-            }
-            return list;
+                        Verified = signature.Verify(
+                            encoding.GetBytes(proof.Value), 
+                            Convert.FromBase64String(proof.OrgSign))
+                    };
+                });
+            }).ToArray();
         }
 
         public string[] DecryptAddresses(string token, string key)

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace frontend.API.Models.UI
 {
-    public class UserProof
+    public class IssueProofRequest
     {
         public string Address;
         public string Value;

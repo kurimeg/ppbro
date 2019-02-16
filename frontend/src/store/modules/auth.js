@@ -5,18 +5,31 @@ const state = {
 }
 
 const mutations = {
-  storeAccount (state, certificates) {
-    state.certificates = certificates
+  storeAccount (state, account) {
+    state.account = account
   }
 }
 
 const actions = {
   signup ({ commit }, param) {
-    debugger
-    const account = { name: param.name, mail: param.mail }
+    const account = {
+      name: param.name,
+      nameEng: '',
+      photoSrc: '',
+      mail: param.mail,
+      birthday: '',
+      detail: ''
+    }
     commit('storeAccount', account)
     localStorage.setItem('account', JSON.stringify(account))
     router.push('portfolio')
+  },
+  edit ({ commit }, param) {
+    commit('storeAccount', param)
+    localStorage.setItem('account', JSON.stringify(param))
+    return new Promise((resolve, reject) => {
+      resolve()
+    })
   }
 }
 

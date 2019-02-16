@@ -18,6 +18,7 @@
             label="メールアドレス"
             required
             outline
+            type="email"
           ></v-text-field>
         </v-flex>
       </v-layout>
@@ -35,20 +36,23 @@
         </v-flex>
       </v-layout>
     </v-flex>
+    <div class="home-background-image">
+    </div>
   </v-layout>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-
+import { mapActions } from 'vuex'
 
 export default {
-  data: () => ({
-    profile: {
-      name: '',
-      mail: ''
+  data: function () {
+    return {
+      profile: {
+        name: '',
+        mail: ''
+      }
     }
-  }),
+  },
   methods: {
     ...mapActions({
       signup: 'auth/signup'
@@ -59,6 +63,12 @@ export default {
 
 <style scoped>
 .home-background{
+  position: relative;
   background: linear-gradient(#F4FFC7, #408C98, #0F2530);
+}
+.home-background-image{
+  /* position: absolute;
+  z-index: 2;
+  background-image: url('~@/assets/app-image.png'); */
 }
 </style>

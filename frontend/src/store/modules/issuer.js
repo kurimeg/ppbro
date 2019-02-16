@@ -20,11 +20,6 @@ const actions = {
   },
   clearIssuers ({ commit }) {
     commit('setIssuers', [])
-  },
-  requestCertificate ({ commit }) {
-    return new Promise((resolve, reject) => {
-      resolve()
-    })
   }
 }
 

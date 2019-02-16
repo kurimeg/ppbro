@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-toolbar color="primary" dark fixed app>
-      <v-toolbar-side-icon @click.stop="visible = !visible"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <!-- <v-toolbar-side-icon @click.stop="visible = !visible"></v-toolbar-side-icon> -->
+      <v-toolbar-title>Portfolio</v-toolbar-title>
     </v-toolbar>
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="visible"
       fixed
       app
@@ -23,17 +23,17 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    visible:  false,
+    visible: false,
     navigations: [
-      { icon: 'account_circle', name: 'ポートフォリオ', route: { name: 'portfolio'} },
-      { icon: 'edit', name: 'プロフィール編集', route: { name: 'profile'} }
+      { icon: 'account_circle', name: 'ポートフォリオ', route: { name: 'portfolio' } },
+      { icon: 'edit', name: 'プロフィール編集', route: { name: 'profile' } }
     ]
   })
 }

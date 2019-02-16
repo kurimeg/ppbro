@@ -11,17 +11,18 @@
           <v-btn large @click="pickPhoto()" flat icon outline color="accent" class="profile-photo-button">
             <v-icon>camera_alt</v-icon>
           </v-btn>
-          <input type="file" style="display: none" ref="image" accept="image/*" @change="onPhotoPicked">    
-        </div>   
+          <input type="file" style="display: none" ref="image" accept="image/*" @change="onPhotoPicked">
+        </div>
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap>      
+    <v-layout row wrap>
       <v-flex xs6 px-2>
         <v-text-field
           v-model="profile.name"
           label="氏名（漢字）"
           required
+          @change="onChangeForm"
         ></v-text-field>
       </v-flex>
 
@@ -30,9 +31,10 @@
           v-model="profile.nameEng"
           label="氏名（英字）"
           required
+          @change="onChangeForm"
         ></v-text-field>
       </v-flex>
-
+    </v-layout>
       <!-- <v-flex xs12 px-2>
         <v-menu
           v-model="datepicker"
@@ -55,55 +57,66 @@
         </v-menu>
       </v-flex> -->
 
+    <v-layout row wrap>
       <v-flex xs12 px-2>
           <v-textarea
             v-model="profile.detail"
             label="自己PR"
+            @change="onChangeForm"
           ></v-textarea>
-          
-          <!-- <v-btn
-            :disabled="!valid"
-            color="success"
-            @click="validate"
-          >
-            Validate
-          </v-btn>
+      </v-flex>
+    </v-layout>
 
-          <v-btn
-            color="error"
-            @click="reset"
-          >
-            Reset Form
-          </v-btn>
+    <v-layout row wrap d-inline-flex align-content-center>
+      <v-flex xs12 d-flex v-if="this.saving">
 
-          <v-btn
-            color="warning"
-            @click="resetValidation"
-          >
-            Reset Validation
-          </v-btn> -->     
+        <template v-if="saving">
+          <v-progress-circular
+            indeterminate
+            color="accent"
+            size="20"
+          ></v-progress-circular>
+          <strong class="profile-save">Saving...</strong>
+        </template>
+
+        <template v-if="this.saved">
+          <v-icon color="accent">check_circle</v-icon>
+          <strong class="profile-save">Saved!</strong>
+        </template>
+
       </v-flex>
     </v-layout>
   </v-form>
-  <!-- <v-divider light></v-divider> -->
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  data: () => ({
-    visible:  false,
-    valid: true,
-    datepicker: false,
-    profile: {
-      name: '',
-      nameEng: '',
-      photoSrc: null,
-      birthday: '',
-      detail: ''
+  data: function () {
+    return {
+      visible: false,
+      valid: true,
+      datepicker: false,
+      profile: this.account,
+      timer: {},
+      saving: false,
+      saved: false
     }
-  }),
+  },
   props: {
-    account: Object
+    account: {
+      type: Object,
+      default: function () {
+        return {
+          name: '',
+          nameEng: '',
+          photoSrc: '',
+          birthday: '',
+          detail: ''
+        }
+      }
+    }
   },
   computed: {
     photoSrc: function () {
@@ -114,17 +127,31 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      edit: 'auth/edit'
+    }),
     pickPhoto () {
-      this.$refs.image.click();
+      this.$refs.image.click()
     },
-		onPhotoPicked (e) {
-			const files = e.target.files;
-      const fr = new FileReader ()
+    onPhotoPicked (e) {
+      const files = e.target.files
+      const fr = new FileReader()
       fr.readAsDataURL(files[0])
       fr.addEventListener('load', () => {
         this.profile.photoSrc = fr.result
-      })      		
-    } 
+        this.onChangeForm()
+      })
+    },
+    onChangeForm () {
+      this.saving = true
+      this.edit(this.profile)
+        .then(() => {
+          this.saved = true
+        })
+        .finally(() => {
+          this.saving = false
+        })
+    }
   }
 }
 </script>
@@ -133,7 +160,7 @@ export default {
 .profile-container{
   position: relative;
   display: flex;
-  justify-content: center;  
+  justify-content: center;
 }
 .profile-photo{
   height: 30vh;
@@ -145,5 +172,10 @@ export default {
   z-index: 1;
   left: 75%;
   bottom: 0%;
+}
+.profile-save{
+  margin-left: 4px;
+  padding-top: 2px;
+  color:#65BAC4;
 }
 </style>

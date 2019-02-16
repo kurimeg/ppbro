@@ -77,10 +77,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchCertificates: 'certificate/fetchCertificates'
+      fetchCertificates: 'certificate/fetchCertificates',
+      fetchProofs: 'certificate/fetchProofs'
     }),
     initialize: function () {
       this.fetchCertificates()
+      this.fetchProofs()
     },
     onSave: function () {
       this.fetchCertificates()

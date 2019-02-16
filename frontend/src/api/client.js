@@ -51,6 +51,21 @@ export default {
           reject(new Error(err.message))
         })
     })
+  },
+
+  publishProofs: param => {
+    return new Promise((resolve, reject) => {
+      client.post('/proof/send', {
+        targetOrgAddress: 'U4F1B20C8E6DD429A90C090BF39334934',
+        // targetOrgAddress: param.sharers[0].src,
+        profileAddressList: ['d8a6f80a-a099-488c-afc0-c22dd63dd457', 'd8a6f80a-a099-488c-afc0-c22dd63dd457']
+        // profileAddressList: param.certificateKeys
+      })
+        .then(res => resolve({ send: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
   }
 
 }

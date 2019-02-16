@@ -36,16 +36,18 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
-  fetchRequest ({ commit }) {
-    apiClient.fetchRequest().then(response => {
+  fetchRequests ({ commit }) {
+    apiClient.fetchRequests().then(response => {
       console.log(response)
-      const proofs = response.proofs.map(item => {
+      const account = JSON.parse(localStorage.getItem('account'))
+      const proofs = response.proofs.filter(item => item.OrgSign === '').map(item => {
         return {
-          issuerName: item.OrgName,
-          issueDate: item.DateTime,
-          detail: '',
-          type: item.Value,
-          issuerSign: item.Verified,
+          address: item.Address,
+          issuerName: account.name + ' ' + account.nameEng,
+          issueDate: '',
+          detail: '卒業証明',
+          type: '取得',
+          issuerSign: item.MySign,
           userSign: ''
         }
       })

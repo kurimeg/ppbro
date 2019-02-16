@@ -43,9 +43,9 @@ export default {
     })
   },
 
-  fetchRequest: () => {
+  fetchRequests: () => {
     return new Promise((resolve, reject) => {
-      client.get('/api/account/requestedprofiles/U8F1B20C8E6DD429A90C090BF39334934')
+      client.get('/account/requestedprofiles/U8F1B20C8E6DD429A90C090BF39334934')
         .then(res => resolve({ proofs: res }))
         .catch(err => {
           reject(new Error(err.message))

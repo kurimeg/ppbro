@@ -31,22 +31,25 @@ namespace frontend.API.Controllers
 
         [HttpPost]
         [Route("sendproofs")]
-        public async Task<Hashtable> SendProofs([FromBody] List<String> profileAddressList)
+        public async Task<Hashtable> SendProofs([FromBody] SendProofRequest request)
         {
-            // create cmpany temporary bank account
-           var profile = await _profileService.CreateProfile("公開先企業名");
+            // Create address to send profiles
+            var destination = await _profileService.CreateProfile(request.TargetOrgAddress);
 
-            var target = string.Join(", ", profileAddressList);
-            var signature = DigitalSignature.FromKey(Convert.FromBase64String(profile.PrivateKey),  Convert.FromBase64String(profile.PublicKey));
-            byte[] signedValue = signature.Sign(System.Text.Encoding.ASCII.GetBytes(target));
+            // sign to profile addresses
+            var signature = DigitalSignature.FromKey(
+                Convert.FromBase64String(destination.PrivateKey), 
+                Convert.FromBase64String(destination.PublicKey));
+            var value = string.Join(", ", request.ProfileAddressList);
+            byte[] signedValue = signature.Sign(System.Text.Encoding.ASCII.GetBytes(value));
 
-            // send profiles to temporary bank account
+            // send profile addresses
             var param = new Hashtable();
-            param["address"] = profile.Address;
+            param["address"] = destination.Address;
             param["limitDate"] = DateTime.UtcNow.AddHours(24).ToString("yyyy-MM-dd HHmmss");
             param["mySign"] = Convert.ToBase64String(signedValue);
-            param["pubKey"] = profile.PublicKey;
-            param["profileAddressList"] = profileAddressList;
+            param["pubKey"] = destination.PublicKey;
+            param["profileAddressList"] = request.ProfileAddressList;
 
             return param;
              //await _repository.SendProofs(param);

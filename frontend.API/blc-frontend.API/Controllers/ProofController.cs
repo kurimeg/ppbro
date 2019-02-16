@@ -32,10 +32,10 @@ namespace frontend.API.Controllers
 
 
         [HttpPost]
-        public async Task Post(UserProof userProof)
+        public async Task Post(IssueProofRequest proof)
         {
             ProfileService service = new ProfileService();
-            await service.IssueProof(userProof);
+            await service.IssueProof(proof);
         }
     }
 }

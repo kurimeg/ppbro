@@ -7,9 +7,9 @@ namespace frontend.API.Models.UI
 {
     public class IssueProofRequest
     {
-        public string Address;
+        public string ProfileAddress;
         public string Value;
         public string PrivateKey;
-        public string Name;//大学名とか発行者名
+        public string IssuerAddress;
     }
 }

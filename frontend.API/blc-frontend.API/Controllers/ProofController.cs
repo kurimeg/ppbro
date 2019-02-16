@@ -74,7 +74,8 @@ namespace frontend.API.Controllers
         public async Task<IEnumerable<ProofResult>> ListPoof([FromBody] ShowProof param)
         {
             string[] addresses = _profileService.DecryptAddresses(param.Token, param.PrivateKey);
-            return await _profileService.GetProofListByProfileAddressesToShow(addresses);
+            //return await _profileService.GetProofListByProfileAddressesToShow(addresses);//TODO: テスト不足で不安なため暫定コメントアウト
+            return await _profileService.GetProofListByProfileAddresses(addresses);
         }
     }
 }

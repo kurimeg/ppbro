@@ -89,13 +89,13 @@ namespace frontend.API.Services
             return joinedAddresses.Split(',');
         }
 
-
         public async Task<IEnumerable<ProofResult>> GetProofListByProfileAddressesToShow(string[] addresses)
         {
             var current = DateTime.UtcNow;
             return (await GetProofListByProfileAddresses(addresses)).Where(x =>
-                current < DateTime.ParseExact(x.LimitDate, "yyyy-MM-dd HHmmss", null)).ToArray();
+                x.LimitDate != null &&
+                DateTime.ParseExact(x.LimitDate, "yyyy-MM-dd HHmmss", null) > current).ToArray();
         }
-       
+
     }
 }

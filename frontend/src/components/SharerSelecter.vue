@@ -124,7 +124,7 @@ export default {
     ...mapActions({
       fetchSharers: 'sharer/fetchSharers',
       clearSharers: 'sharer/clearSharers',
-      publishCertificates: 'certificate/publishCertificates'
+      publishCertificates: 'certificate/publishProofs'
     }),
     initialize: function () {
       this.searchWord = ''

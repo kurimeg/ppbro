@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -12,6 +13,7 @@ namespace frontend.API.Controllers
     public class IwaController : ApiController
     {
         IwaRepository _repository = new IwaRepository();
+        ProfileService _profileService = new ProfileService();
 
         [HttpGet]
         [Route("issuers")]
@@ -29,16 +31,25 @@ namespace frontend.API.Controllers
 
         [HttpPost]
         [Route("sendproofs")]
-        public async Task SendProofs([FromBody] SendProofRequest request)
+        public async Task<Hashtable> SendProofs([FromBody] List<String> profileAddressList)
         {
-            var param = new Hashtable();
-            param["address"] = request.Address;
-            param["limitDate"] = request.LimitDate;
-            param["mySign"] = request.MySign;
-            param["pubKey"] = request.PubKey;
-            param["profileAddressList"] = request.ProfileAddressList;
+            // create cmpany temporary bank account
+           var profile = await _profileService.CreateProfile("公開先企業名");
 
-             await _repository.SendProofs(param);
+            var target = string.Join(", ", profileAddressList);
+            var signature = DigitalSignature.FromKey(Convert.FromBase64String(profile.PrivateKey),  Convert.FromBase64String(profile.PublicKey));
+            byte[] signedValue = signature.Sign(System.Text.Encoding.ASCII.GetBytes(target));
+
+            // send profiles to temporary bank account
+            var param = new Hashtable();
+            param["address"] = profile.Address;
+            param["limitDate"] = DateTime.UtcNow.AddHours(24).ToString("yyyy-MM-dd HHmmss");
+            param["mySign"] = Convert.ToBase64String(signedValue);
+            param["pubKey"] = profile.PublicKey;
+            param["profileAddressList"] = profileAddressList;
+
+            return param;
+             //await _repository.SendProofs(param);
         }
     }
 }

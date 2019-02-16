@@ -73,9 +73,25 @@ const actions = {
       })
     })
   },
-  shareCertificate ({ commit }) {
-    return new Promise((resolve, reject) => {
-      resolve()
+  publishCertificates ({ commit }, param) {
+    const sharer = {
+      Token: 'MzJiNmFlMmEtYWRlOS00ODA4LWJhNDctMTk2NjAxNDk3YWY2',
+      PrivateKey: 'ii7+c9qCfoZoI1tHda/8AqNXl//FdAXFdcmUnmDJXIs='
+    }
+
+    apiClient.publishProofs(sharer).then(respons => {
+      console.log(respons)
+      const proofs = respons.proofs.map(item => {
+        return {
+          issuerName: item.OrgName,
+          issueDate: item.DateTime,
+          detail: '',
+          type: item.Value,
+          issuerSign: item.Verified,
+          userSign: ''
+        }
+      })
+      commit('setCertificates', proofs)
     })
   }
 }

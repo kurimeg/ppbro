@@ -16,66 +16,66 @@ namespace frontend.API.Tests.Controllers
         [TestMethod]
         public void Get()
         {
-            // 準備
-            ValuesController controller = new ValuesController();
+            //// 準備
+            //ValuesController controller = new ValuesController();
 
-            // 実行
-            IEnumerable<string> result = controller.Get();
+            //// 実行
+            //IEnumerable<string> result = controller.Get();
 
-            // アサート
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("value1", result.ElementAt(0));
-            Assert.AreEqual("value2", result.ElementAt(1));
+            //// アサート
+            //Assert.IsNotNull(result);
+            //Assert.AreEqual(2, result.Count());
+            //Assert.AreEqual("value1", result.ElementAt(0));
+            //Assert.AreEqual("value2", result.ElementAt(1));
         }
 
         [TestMethod]
         public void GetById()
         {
-            // 準備
-            ValuesController controller = new ValuesController();
+            //// 準備
+            //ValuesController controller = new ValuesController();
 
-            // 実行
-            string result = controller.Get(5);
+            //// 実行
+            //string result = controller.Get(5);
 
-            // アサート
-            Assert.AreEqual("value", result);
+            //// アサート
+            //Assert.AreEqual("value", result);
         }
 
         [TestMethod]
         public void Post()
         {
-            // 準備
-            ValuesController controller = new ValuesController();
+            //// 準備
+            //ValuesController controller = new ValuesController();
 
-            // 実行
-            controller.Post("value");
+            //// 実行
+            //controller.Post("value");
 
-            // アサート
+            //// アサート
         }
 
         [TestMethod]
         public void Put()
         {
-            // 準備
-            ValuesController controller = new ValuesController();
+            //// 準備
+            //ValuesController controller = new ValuesController();
 
-            // 実行
-            controller.Put(5, "value");
+            //// 実行
+            //controller.Put(5, "value");
 
-            // アサート
+            //// アサート
         }
 
         [TestMethod]
         public void Delete()
         {
-            // 準備
-            ValuesController controller = new ValuesController();
+            //// 準備
+            //ValuesController controller = new ValuesController();
 
-            // 実行
-            controller.Delete(5);
+            //// 実行
+            //controller.Delete(5);
 
-            // アサート
+            //// アサート
         }
     }
 }

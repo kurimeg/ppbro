@@ -13,7 +13,6 @@ namespace frontend.API.Services
     public class ProfileService
     {
         BlockchainRepository repo = new BlockchainRepository();
-        IwaRepository iwarepo = new IwaRepository();
 
         public async Task<UserProfile> CreateProfile(string issuerAddress)
         {
@@ -21,7 +20,7 @@ namespace frontend.API.Services
             var privateKey = Convert.ToBase64String(ds.PrivateKey);
             var publicKey = Convert.ToBase64String(ds.PublicKey);
 
-            IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
+            IEnumerable<Issuer> issuers = await repo.GetIssuers();
             Issuer _issuer = issuers.Where(x => x.Address == issuerAddress).Select(x => x).FirstOrDefault();
 
             var guid = Guid.NewGuid();
@@ -38,7 +37,7 @@ namespace frontend.API.Services
             var id = Guid.NewGuid().ToString();
             var address = param.ProfileAddress;
             var value = param.Value;
-            IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
+            IEnumerable<Issuer> issuers = await repo.GetIssuers();
             Issuer issuer = issuers.Where(x => x.Address == param.IssuerAddress).Select(x => x).FirstOrDefault();
             Profile profile = (await repo.GetProfileByAddresses(new string[] { address })).FirstOrDefault();
             DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(param.PrivateKey), Convert.FromBase64String(issuer.Pubkey));
@@ -56,7 +55,7 @@ namespace frontend.API.Services
         {
             var list = new List<ProofResult>();
             var encoding = EncodingUtil.GetEncoding();
-            var issuers = await iwarepo.GetIssuers();
+            var issuers = await repo.GetIssuers();
             var profiles = await repo.GetProfileByAddresses(addresses);
 
             return profiles.SelectMany(profile => {
@@ -70,6 +69,7 @@ namespace frontend.API.Services
                     {
                         ProfileAddress = profile.Address,
                         DateTime = proof.DateTime.ToString("yyyy-MM-dd"),
+                        LimitDate = profile.LimitDate,
                         Id = proof.Id,
                         OrgName = orgName,
                         Value = proof.Value,
@@ -88,5 +88,14 @@ namespace frontend.API.Services
             string joinedAddresses = EncodingUtil.GetEncoding().GetString(DigitalSignature.Decrypt(tokenBytes, keyBytes));
             return joinedAddresses.Split(',');
         }
+
+        public async Task<IEnumerable<ProofResult>> GetProofListByProfileAddressesToShow(string[] addresses)
+        {
+            var current = DateTime.UtcNow;
+            return (await GetProofListByProfileAddresses(addresses)).Where(x =>
+                x.LimitDate != null &&
+                DateTime.ParseExact(x.LimitDate, "yyyy-MM-dd HHmmss", null) > current).ToArray();
+        }
+
     }
 }

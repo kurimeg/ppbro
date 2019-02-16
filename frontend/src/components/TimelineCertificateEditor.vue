@@ -1,13 +1,13 @@
 <template>
-  <v-flex xs12 md6 class="certificate-container">
+  <v-flex xs12 md6 class="certificate-container" pa-2>
     <!-- <v-img
       class="certificate"
       :src="certificateSrc"
       position="left"
       contain
     ></v-img> -->
-    <v-card height="17vh" hover flat class="certificate">
-      <v-layout row wrap mt-2 mx-2>
+    <v-card @click="onClick()" height="20vh" hover :class="{ 'certificate': !selected ,'certificate-selected': selected }">
+      <v-layout row wrap>
         <v-flex xs3 md3 pa-2>
           <v-img
             :src="!this.certificate.src ? require('@/assets/university.svg') : this.certificate.src"
@@ -56,14 +56,28 @@
 
 <script>
 export default {
+  data: function () {
+    return {
+      selected: false
+    }
+  },
   props: {
     certificate: Object
+  },
+  methods: {
+    onClick: function () {
+      debugger
+      this.selected = !this.selected
+    }
   }
 }
 </script>
 
 <style scoped>
-.certificate{
+.certificate {
+  border: solid 1px transparent;
+}
+.certificate-selected {
   border: solid 1px #489DAB;
   box-shadow:
     0px 0px 0px 0px rgba(0,0,0,0.2),

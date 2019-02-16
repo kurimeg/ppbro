@@ -36,7 +36,7 @@
                     :key="index"
                     :certificate="certificate"
                   />
-                  <v-flex xs12 md6 mt-2>
+                  <v-flex xs12 md6 pa-2>
                     <div class="certificate-add">
                       <issuer-selecter />
                     </div>
@@ -95,7 +95,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 17vh;
+  height: 20vh;
   border: dashed 1px #489DAB;
 }
 </style>

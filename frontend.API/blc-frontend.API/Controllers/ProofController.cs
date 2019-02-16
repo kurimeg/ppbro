@@ -29,9 +29,12 @@ namespace frontend.API.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task Post(IssueProofRequest proof)
+        public async Task Post([FromBody] IEnumerable<IssueProofRequest> proofs)
         {
-            await _profileService.IssueProof(proof);
+            foreach (var proof in proofs)
+            {
+                await _profileService.IssueProof(proof);
+            }
         }
 
         [HttpPost]

@@ -91,5 +91,17 @@ namespace frontend.API.Services
         {
             return dsa.VerifyData(data, sign, HashAlgorithmName.SHA256);
         }
+
+        //TODO
+        public static byte[] Encrypt(byte[] data, byte[] key)
+        {
+            return data;
+        }
+
+        //TODO
+        public static byte[] Decrypt(byte[] data, byte[] key)
+        {
+            return data;
+        }
     }
 }

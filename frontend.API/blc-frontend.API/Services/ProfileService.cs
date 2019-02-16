@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Text;
+using frontend.API.Utility;
 
 namespace frontend.API.Services
 {
@@ -40,15 +42,40 @@ namespace frontend.API.Services
             Issuer issuer = issuers.Where(x => x.Address == param.IssuerAddress).Select(x => x).FirstOrDefault();
             Profile profile = (await repo.GetProfileByAddresses(new string[] { address })).FirstOrDefault();
             DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(param.PrivateKey), Convert.FromBase64String(issuer.Pubkey));
-            byte[] signedValue = ds.Sign(System.Text.Encoding.ASCII.GetBytes(value));
+            byte[] signedValue = ds.Sign(EncodingUtil.GetEncoding().GetBytes(value));//エンコーディング要確認
 
             await repo.IssueProof(id, address, value, Convert.ToBase64String(signedValue));
         }
 
-        public async Task<IEnumerable<Proof>> GetProofListByProfileAddresses(string[] addresses)
+        public async Task<Profile> GetProfile(string address)
         {
-            var profiles = await repo.GetProfileByAddresses(addresses);
-            return profiles.SelectMany(profile => profile.Proof);
+            return await repo.GetProfileByAddress(address);
         }
+
+        public async Task<IEnumerable<ProofResult>> GetProofListByProfileAddresses(string[] addresses)
+        {
+            var list = new List<ProofResult>();
+            var encoding = EncodingUtil.GetEncoding();
+            var issuers = await iwarepo.GetIssuers();
+            var profiles = await repo.GetProfileByAddresses(addresses);
+            foreach (var profile in profiles)
+            {
+                var orgName = issuers.Where(x => x.Address == profile.OrgAddress).FirstOrDefault().Name;
+                var publickey = profile.Pubkey;
+                DigitalSignature signature = DigitalSignature.FromKey(Convert.FromBase64String(profile.Pubkey));
+                foreach (var proof in profile.Proof)
+                {
+                    list.Add(new ProofResult {
+                        DateTime = proof.DateTime,
+                        Id = proof.Id,
+                        OrgName = orgName,
+                        Value = proof.Value,
+                        Verified = signature.Verify(encoding.GetBytes(proof.Value), Convert.FromBase64String(proof.OrgSign))
+                    });
+                }
+            }
+            return list;
+        }
+
     }
 }

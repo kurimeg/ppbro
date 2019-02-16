@@ -60,11 +60,6 @@ namespace frontend.API.Services
             Trace.WriteLine(response.ToString());
         }
 
-        public async Task SignProfile(string address, string orgSign)
-        {
-
-        }
-
         public async Task<IEnumerable<Profile>> GetProfileByAddresses(string[] addresses)
         {
             var client = CreateBlockchainClient();
@@ -100,11 +95,6 @@ namespace frontend.API.Services
             return profileList;
         }
 
-        public async Task<ProfileByOrgAddress> GetProfileByOrgAddress(string address)
-        {
-            return new ProfileByOrgAddress();
-        }
-
         public async Task IssueProof(string id, string address, string value, string orgSign)
         {
             var client = CreateBlockchainClient();
@@ -129,5 +119,21 @@ namespace frontend.API.Services
             }
             Trace.WriteLine(response.ToString());
         }
+
+        public async Task<Profile> GetProfileByAddress(string address)
+        {
+            var client = CreateBlockchainClient();
+
+            var param = new { address };
+            var json = JsonConvert.SerializeObject(param);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("/getProfile", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<Profile>();
+            }
+            return new Profile();
+        }
+
     }
 }

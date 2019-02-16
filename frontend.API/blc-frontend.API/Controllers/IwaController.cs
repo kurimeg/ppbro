@@ -8,6 +8,7 @@ using frontend.API.Models;
 using frontend.API.Models.UI;
 using frontend.API.Services;
 using System.Text;
+using frontend.API.Utility;
 
 namespace frontend.API.Controllers
 {
@@ -43,7 +44,7 @@ namespace frontend.API.Controllers
                 Convert.FromBase64String(destination.PrivateKey), 
                 Convert.FromBase64String(destination.PublicKey));
             var joindAddresses = string.Join(", ", request.ProfileAddressList);
-            byte[] signedValue = signature.Sign(System.Text.Encoding.ASCII.GetBytes(joindAddresses));
+            byte[] signedValue = signature.Sign(EncodingUtil.GetEncoding.GetBytes(joindAddresses));
 
             // send profile addresses
             var param = new Hashtable();
@@ -57,7 +58,8 @@ namespace frontend.API.Controllers
 
             // create access token
             // TODO: encrypted token by company private key
-            var token = Convert.ToBase64String(Encoding.UTF8.GetBytes(joindAddresses));
+            byte[] encrypted = DigitalSignature.Encrypt(EncodingUtil.GetEncoding.GetBytes(joindAddresses), Convert.FromBase64String(destination.PrivateKey));
+            var token = Convert.ToBase64String(encrypted);
             return new {
                 AccessToken = token,
                 Destination = destination

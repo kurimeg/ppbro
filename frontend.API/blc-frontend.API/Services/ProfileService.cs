@@ -60,9 +60,10 @@ namespace frontend.API.Services
             var profiles = await repo.GetProfileByAddresses(addresses);
             foreach (var profile in profiles)
             {
-                var orgName = issuers.Where(x => x.Address == profile.OrgAddress).FirstOrDefault().Name;
-                var publickey = profile.Pubkey;
-                DigitalSignature signature = DigitalSignature.FromKey(Convert.FromBase64String(profile.Pubkey));
+                var issuer = issuers.Where(x => x.Address == profile.OrgAddress).FirstOrDefault();
+                var orgName = issuer.Name;
+                var publickey = issuer.Pubkey;
+                DigitalSignature signature = DigitalSignature.FromKey(Convert.FromBase64String(publickey));
                 foreach (var proof in profile.Proof)
                 {
                     list.Add(new ProofResult {

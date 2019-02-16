@@ -83,16 +83,15 @@ export default {
     ...mapActions({
       fetchIssuers: 'issuer/fetchIssuers',
       clearIssuers: 'issuer/clearIssuers',
-      requestCertificate: 'certificate/requestCertificate'
+      requestIssue: 'certificate/requestIssue'
     }),
     initialize: function () {
       this.searchWord = ''
       this.clearIssuers()
     },
     selectIssuer: function () {
-      this.requestCertificate()
+      this.requestIssue()
         .then(() => {
-
         })
         .finally(() => {
           this.visible = false

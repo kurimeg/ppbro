@@ -13,20 +13,14 @@ const mutations = {
   setRequests (state, requests) {
     state.requests = requests
   },
-  addCertificate (state, certificate) {
-    state.certificates.push(certificate)
+  addCertificate (state, result) {
+    state.certificates.push(result.proof)
+    state.profiles.push(result.profile)
+    localStorage.setItem('profiles', JSON.stringify(state.profiles))
   }
 }
 
 const actions = {
-  fetchCertificates ({ commit }) {
-    const certificates = [
-      { issuerName: '法政大学', issueDate: '2015/03/01', detail: 'キャリアデザイン学部キャリアデザイン学科', type: '卒業', issuerSign: true, userSign: true },
-      { issuerName: '株式会社システムコンサルタント', issueDate: '2015/04/01', detail: 'オープンシステム統括部', type: '入社', issuerSign: true, userSign: true },
-      { issuerName: '情報処理推進機構', issueDate: '2016/10/31', detail: '基本情報技術者', type: '取得', issuerSign: true, userSign: true }
-    ]
-    commit('setCertificates', certificates)
-  },
   fetchRequests ({ commit }) {
     const requests = [
       { userName: '栗原萌実' },
@@ -54,13 +48,32 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
-  requestCertificate ({ commit }) {
-    commit('addCertificate', { issuerName: '情報処理推進機構', issueDate: '2016/10/31', detail: '基本情報技術者', type: '取得', issuerSign: false, userSign: false })
-    return new Promise((resolve, reject) => {
-      resolve()
+  requestIssue ({ commit }) {
+    apiClient.requestIssue({ address: 'U9F1B20C8E6DD429A90C090BF39334934' }).then(respons => {
+      console.log(respons)
+      const result = {
+        proof: {
+          issuerName: '沖縄大学',
+          issueDate: '',
+          detail: '卒業証明',
+          type: '取得',
+          issuerSign: false,
+          userSign: false
+        },
+        profile: {
+          address: respons.profile.Address,
+          issureAddress: 'U9F1B20C8E6DD429A90C090BF39334934',
+          privateKey: respons.profile.PrivateKey,
+          publickKey: respons.profile.PublickKey
+        }
+      }
+      commit('addCertificate', result)
+      return new Promise((resolve, reject) => {
+        resolve()
+      })
     })
   },
-  publishCertificates ({ commit }) {
+  shareCertificate ({ commit }) {
     return new Promise((resolve, reject) => {
       resolve()
     })

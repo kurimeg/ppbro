@@ -78,12 +78,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchCertificates: 'certificate/fetchCertificates',
       publishCertificates: 'certificate/publishCertificates',
       fetchProofs: 'certificate/fetchProofs'
     }),
     initialize: function () {
-      this.fetchCertificates()
       this.fetchProofs()
     },
     onPublish: function () {

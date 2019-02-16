@@ -26,7 +26,7 @@ export default {
       const query = profiles.map(item => item.address).join('&address=')
       console.log('/proof?address=' + query)
       client.get('/proof/a?address=' + query)
-        .then(res => resolve({ proofs: res.data }))
+        .then(res => resolve({ proofs: res }))
         .catch(err => {
           reject(new Error(err.message))
         })

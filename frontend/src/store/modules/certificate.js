@@ -113,6 +113,13 @@ const actions = {
       })
       commit('setCertificates', proofs)
     })
+  },
+
+  issueProofs ({ commit }, param) {
+    apiClient.issueProofs(param).then(response => {
+      console.log(response)
+      this.fetchRequests()
+    })
   }
 }
 

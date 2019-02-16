@@ -71,7 +71,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchRequests: 'certificate/fetchRequests'
+      fetchRequests: 'certificate/fetchRequests',
+      issueProofs: 'certificate/issueProofs'
     }),
     initialize: function () {
       this.fetchRequests()
@@ -89,7 +90,7 @@ export default {
       }
     },
     onIssue () {
-      console.log(this.selected)
+      this.issueProofs(this.selected)
     }
   }
 }

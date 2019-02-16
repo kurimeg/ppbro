@@ -80,6 +80,7 @@ namespace frontend.API.Controllers
 
         [HttpOptions]
         [Route("send")]
+        [Route("show")]
         public void Options()
         {
 

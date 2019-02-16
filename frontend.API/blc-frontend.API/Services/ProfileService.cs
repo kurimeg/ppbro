@@ -77,5 +77,12 @@ namespace frontend.API.Services
             return list;
         }
 
+        public string[] DecryptAddresses(string token, string key)
+        {
+            var tokenBytes = Convert.FromBase64String(token);
+            var keyBytes = Convert.FromBase64String(key);
+            string joinedAddresses = EncodingUtil.GetEncoding().GetString(DigitalSignature.Decrypt(tokenBytes, keyBytes));
+            return joinedAddresses.Split(',');
+        }
     }
 }

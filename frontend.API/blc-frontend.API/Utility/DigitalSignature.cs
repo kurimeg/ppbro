@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography;
 
-namespace frontend.API.Services
+namespace frontend.API.Utility
 {
     /// <summary>
     /// 思いっきり https://qiita.com/yoship1639/items/6dd0cc8623d7f3969d78

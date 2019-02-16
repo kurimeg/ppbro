@@ -38,10 +38,8 @@ namespace frontend.API.Controllers
         public async Task<IEnumerable<ProofResult>> ListPoof([FromBody] ShowProof param)
         {
             ProfileService service = new ProfileService();
-            var token = Convert.FromBase64String(param.Token);
-            var key = Convert.FromBase64String(param.PrivateKey);
-            string joinedAddresses = EncodingUtil.GetEncoding().GetString(DigitalSignature.Decrypt(token, key));
-            return await service.GetProofListByProfileAddresses(joinedAddresses.Split(','));
+            string[] addresses = service.DecryptAddresses(param.Token, param.PrivateKey);
+            return await service.GetProofListByProfileAddresses(addresses);
         }
     }
 }

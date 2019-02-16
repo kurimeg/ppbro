@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'http://localhost:53402/' + 'api/'
+  baseURL: 'https://bchk-api.azurewebsites.net/api/'
 })
 
 client.interceptors.request.use((config) => {

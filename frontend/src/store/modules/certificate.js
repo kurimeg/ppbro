@@ -9,8 +9,10 @@ const mutations = {
   setCertificates (state, certificates) {
     state.certificates = certificates
   },
-  addCertificate (state, certificate) {
-    state.certificates.push(certificate)
+  addCertificate (state, result) {
+    state.certificates.push(result.proof)
+    state.profiles.push(result.profile)
+    localStorage.setItem('profiles', JSON.stringify(state.profiles))
   }
 }
 
@@ -31,10 +33,29 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
-  requestCertificate ({ commit }) {
-    commit('addCertificate', { issuerName: '情報処理推進機構', issueDate: '2016/10/31', detail: '基本情報技術者', type: '取得', issuerSign: false, userSign: false })
-    return new Promise((resolve, reject) => {
-      resolve()
+  requestIssue ({ commit }) {
+    apiClient.requestIssue({ address: 'U9F1B20C8E6DD429A90C090BF39334934' }).then(respons => {
+      console.log(respons)
+      const result = {
+        proof: {
+          issuerName: '沖縄大学',
+          issueDate: '',
+          detail: '卒業証明',
+          type: '取得',
+          issuerSign: false,
+          userSign: false
+        },
+        profile: {
+          address: respons.profile.Address,
+          issureAddress: 'U9F1B20C8E6DD429A90C090BF39334934',
+          privateKey: respons.profile.PrivateKey,
+          publickKey: respons.profile.PublickKey
+        }
+      }
+      commit('addCertificate', result)
+      return new Promise((resolve, reject) => {
+        resolve()
+      })
     })
   },
   shareCertificate ({ commit }) {

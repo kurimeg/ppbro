@@ -35,8 +35,18 @@ export default {
 
   fetchIssuers: () => {
     return new Promise((resolve, reject) => {
-      client.get('/iwa/issuers')
+      client.get('/account/issuers')
         .then(res => resolve({ issures: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
+  },
+
+  requestIssue: issuer => {
+    return new Promise((resolve, reject) => {
+      client.post('/account/profile', issuer)
+        .then(res => resolve({ profile: res }))
         .catch(err => {
           reject(new Error(err.message))
         })

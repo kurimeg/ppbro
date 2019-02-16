@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -12,6 +13,7 @@ namespace frontend.API.Controllers
     public class IwaController : ApiController
     {
         IwaRepository _repository = new IwaRepository();
+        ProfileService _profileService = new ProfileService();
 
         [HttpGet]
         [Route("issuers")]
@@ -29,16 +31,22 @@ namespace frontend.API.Controllers
 
         [HttpPost]
         [Route("sendproofs")]
-        public async Task SendProofs([FromBody] SendProofRequest request)
+        public async Task<Hashtable> SendProofs([FromBody] List<String> profileAddresses)
         {
+            // create cmpany temporary bank account
+           var profile = await _profileService.CreateProfile("temprary");
+
+            // send profiles to temporary bank account
+            var timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             var param = new Hashtable();
-            param["address"] = request.Address;
+            param["address"] = profile.Address;
             param["limitDate"] = request.LimitDate;
             param["mySign"] = request.MySign;
             param["pubKey"] = request.PubKey;
-            param["profileAddressList"] = request.ProfileAddressList;
+            param["profileAddressList"] = profileAddresses;
 
-             await _repository.SendProofs(param);
+            return param
+             //await _repository.SendProofs(param);
         }
     }
 }

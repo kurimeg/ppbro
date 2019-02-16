@@ -21,6 +21,11 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: () => import('@/pages/PortfolioForm.vue')
+    },
+    {
+      path: '/issue',
+      name: 'issue',
+      component: () => import('@/pages/IssueCertificate.vue')
     }
     // {
     //   path: '/about',

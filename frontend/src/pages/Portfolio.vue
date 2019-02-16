@@ -1,5 +1,8 @@
 <template>
-  <layout-baseline>
+  <layout-baseline
+    :headerName="this.headerName"
+    :isUser="this.isUser"
+  >
     <v-container>
       <!-- <v-layout row wrap justify-end>
         <v-btn color="primary" flat icon :to="{ name: 'profile'}">
@@ -44,7 +47,8 @@ export default {
   },
   data: function () {
     return {
-      fab: false
+      headerName: 'プロフィール',
+      isUser: true
     }
   },
   computed: {

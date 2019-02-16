@@ -20,26 +20,27 @@ namespace frontend.API.Services
             var publicKey = Convert.ToBase64String(ds.PublicKey);
 
             IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
-            Issuer _issuer = issuers.Where(x => x.Name == issuerName).Select(x => x).FirstOrDefault();
+            Issuer _issuer = issuers.Where(x => x.Name == issuerName).Select(x => x).FirstOrDefault();//  名前で判定（仮）
 
             var guid = Guid.NewGuid();
             var address = guid.ToString();
-            var orgAddress = _issuer.Address;//  名前で判定（仮）
+            var orgAddress = _issuer.Address;
             var mySign = ds.Sign(Guid.NewGuid().ToByteArray());
-            var orgSign = _issuer.Pubkey;
+            var orgSign = "";
             await repo.InitProfile(address, orgAddress, Convert.ToBase64String(mySign), orgSign, publicKey);
 
             return new UserProfile { PrivateKey = privateKey, PublicKey = publicKey, Address = address };
         }
 
-        public async Task IssueProof(IssueProofRequest proof)
+        public async Task IssueProof(IssueProofRequest param)
         {
             var id = Guid.NewGuid().ToString();
-            var address = proof.Address;
-            var value = proof.Value;
-            //var profiles = await repo.GetProfileByAddresses(new string[] { address });
+            var address = param.Address;
+            var value = param.Value;
+            IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
+            Issuer issuer = issuers.Where(x => x.Name == param.Name).Select(x => x).FirstOrDefault();//  名前で判定（仮）
             Profile profile = (await repo.GetProfileByAddresses(new string[] { address })).FirstOrDefault();
-            DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(proof.PrivateKey), Convert.FromBase64String(profile.OrgSign));
+            DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(param.PrivateKey), Convert.FromBase64String(issuer.Pubkey));
             byte[] signedValue = ds.Sign(System.Text.Encoding.ASCII.GetBytes(value));
 
             await repo.IssueProof(id, address, value, Convert.ToBase64String(signedValue));

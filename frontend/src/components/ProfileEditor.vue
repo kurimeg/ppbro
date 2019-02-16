@@ -68,7 +68,7 @@
     </v-layout>
 
     <v-layout row wrap d-inline-flex align-content-center>
-      <v-flex xs12 d-flex v-if="this.saving">
+      <v-flex xs12 d-flex>
 
         <template v-if="saving">
           <v-progress-circular
@@ -79,7 +79,7 @@
           <strong class="profile-save">Saving...</strong>
         </template>
 
-        <template v-if="this.saved">
+        <template v-if="saved">
           <v-icon color="accent">check_circle</v-icon>
           <strong class="profile-save">Saved!</strong>
         </template>
@@ -147,6 +147,9 @@ export default {
       this.edit(this.profile)
         .then(() => {
           this.saved = true
+          setTimeout(() =>{
+            this.saved = false  
+          }, 1000)
         })
         .finally(() => {
           this.saving = false

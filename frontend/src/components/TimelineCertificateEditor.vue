@@ -1,12 +1,12 @@
 <template>
-  <v-flex xs12 md6 class="certificate-container" pa-2>
     <!-- <v-img
       class="certificate"
       :src="certificateSrc"
       position="left"
       contain
     ></v-img> -->
-    <v-card @click="onClick()" height="20vh" hover :class="{ 'certificate': !selected ,'certificate-selected': selected }">
+  <v-flex xs12 md6 class="certificate-container" pa-2>
+    <v-card @click="onClickCertificate()" height="20vh" hover :class="{ 'certificate': !selected ,'certificate-selected': selected }">
       <v-layout row wrap>
         <v-flex xs3 md3 pa-2>
           <v-img
@@ -35,6 +35,15 @@
       <v-icon color="#FF8160" size="50">fas fa-award</v-icon>
     </v-flex>
   </v-flex>
+    <!-- <v-flex v-if="certificate.issuerSign" offset-xs10 xs2 class="certificate-badge">
+      <v-icon color="#FF8160" size="50">fas fa-award</v-icon>
+    </v-flex>
+    <input 
+      type="checkbox"
+      ref="checkbox"
+      :value="certificate.issuerName"
+      @input="updateText"
+    > -->
   <!-- <v-card color="white" class="mb-3">
     <v-layout row wrap>
       <v-flex xs4 md2>
@@ -65,9 +74,9 @@ export default {
     certificate: Object
   },
   methods: {
-    onClick: function () {
-      debugger
+    onClickCertificate: function () {
       this.selected = !this.selected
+      this.$emit('clicked', { selected: this.selected, key: this.certificate.issuerName })
     }
   }
 }
@@ -78,7 +87,9 @@ export default {
   border: solid 1px transparent;
 }
 .certificate-selected {
-  border: solid 1px #489DAB;
+  border: solid 10px #65BAC4;
+      /* secondary: '#707070',
+    accent: '#65BAC4', */
   box-shadow:
     0px 0px 0px 0px rgba(0,0,0,0.2),
     0px 0px 0px 0px rgba(0,0,0,0.14),
@@ -90,6 +101,6 @@ export default {
 }
 .certificate-badge{
   position: absolute;
-  top:0;
+  top: 0;
 }
 </style>

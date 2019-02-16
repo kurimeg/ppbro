@@ -15,7 +15,7 @@
               v-model="selected"
               :headers="headers"
               :items="certificates"
-              item-key="issuerName"
+              item-key="address"
               select-all
               class="elevation-1"
             >
@@ -89,7 +89,7 @@ export default {
       }
     },
     onIssue () {
-
+      console.log(this.selected)
     }
   }
 }

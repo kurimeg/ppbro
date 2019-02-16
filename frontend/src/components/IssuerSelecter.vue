@@ -11,7 +11,7 @@
         <v-btn icon dark @click.native="visible = false">
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title>おくる</v-toolbar-title>
+        <v-toolbar-title>Select Issuer</v-toolbar-title>
       </v-toolbar>
 
       <v-form>
@@ -65,10 +65,12 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
- data: () => ({
-    visible:  false,
-    searchWord: ''
-  }),
+  data: function () {
+    return {
+      visible: false,
+      searchWord: ''
+    }
+  },
   computed: {
     ...mapState('issuer', ['issuers'])
   },
@@ -81,13 +83,13 @@ export default {
     ...mapActions({
       fetchIssuers: 'issuer/fetchIssuers',
       clearIssuers: 'issuer/clearIssuers',
-      requestCertificate: 'issuer/requestCertificate'
+      requestCertificate: 'certificate/requestCertificate'
     }),
     initialize: function () {
       this.searchWord = ''
       this.clearIssuers()
     },
-    selectIssuer: function (){
+    selectIssuer: function () {
       this.requestCertificate()
         .then(() => {
 
@@ -105,4 +107,3 @@ export default {
   border: solid 1px #489DAB;
 }
 </style>
-

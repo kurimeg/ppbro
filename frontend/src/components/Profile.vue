@@ -5,13 +5,16 @@
         <img class="profile-image" :src="require('@/assets/profile-image.jpg')"/>
       </div>
     </v-flex>
-    <v-flex xs12>
+    <v-flex xs12 mt-2>
       <div class="profile-container">
-        <v-subheader><h1>{{ account.name }}</h1></v-subheader>
+        <h1 class="profile-text">{{ account.name }}</h1>
+      </div>
+      <div class="profile-container">
+        <h2 class="profile-text">{{ account.nameEng }}</h2>
       </div>
     </v-flex>
-    <v-flex xs12>
-      <div>自己PR</div>
+    <v-flex xs12 mt-3>
+      <div class="profile-text profile-detail"><strong>{{ account.detail }}</strong></div>
     </v-flex>
   </v-layout>
   <!-- <v-divider light></v-divider> -->
@@ -33,5 +36,11 @@ export default {
 .profile-image{
   height: 30vh;
   border-radius: 20%;
+}
+.profile-text{
+  color: #707070;
+}
+.profile-detail{
+  white-space:pre-wrap;
 }
 </style>

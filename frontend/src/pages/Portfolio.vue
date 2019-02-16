@@ -1,17 +1,17 @@
 <template>
   <layout-baseline>
     <v-container>
-      <v-layout row wrap justify-end>
+      <!-- <v-layout row wrap justify-end>
         <v-btn color="primary" flat icon :to="{ name: 'profile'}">
           <v-icon dark>edit</v-icon>
         </v-btn>
         <v-btn color="primary" flat icon>
           <v-icon dark>publish</v-icon>
         </v-btn>
-      </v-layout>
+      </v-layout> -->
       <v-layout row wrap>
         <v-flex xs12 md4 pa-1>
-          <profile 
+          <profile
             :account="account"
           />
         </v-flex>
@@ -34,14 +34,18 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import TimelineCertificate from '@/components/portfolio/TimelineCertificate'
-import Profile from '@/components/portfolio/Profile'
-
+import TimelineCertificate from '@/components/TimelineCertificate'
+import Profile from '@/components/Profile'
 
 export default {
   components: {
     TimelineCertificate,
     Profile
+  },
+  data: function () {
+    return {
+      fab: false
+    }
   },
   computed: {
     ...mapState('auth', ['account']),

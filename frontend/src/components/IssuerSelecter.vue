@@ -11,7 +11,7 @@
         <v-btn icon dark @click.native="visible = false">
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title>Select Issuer</v-toolbar-title>
+        <v-toolbar-title>発行者選択</v-toolbar-title>
       </v-toolbar>
 
       <v-form>

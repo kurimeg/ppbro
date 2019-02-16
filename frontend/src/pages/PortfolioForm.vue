@@ -14,11 +14,8 @@
           <v-btn icon dark @click="visible = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Edit</v-toolbar-title>
-          <!-- <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark flat @click="visible = false">Save</v-btn>
-          </v-toolbar-items> -->
+          <v-toolbar-title>編集</v-toolbar-title>
+          <v-spacer></v-spacer>
         </v-toolbar>
 
         <v-container>
@@ -29,13 +26,16 @@
               />
             </v-flex>
             <v-flex xs12 md7 offset-md1 pa-1>
+              <h3 class="certificate-text"></h3>
               <v-container fluid grid-list-sm>
                 <v-layout row wrap>
-                  <timeline-certificate
-                    v-for="(certificate, index) in certificates"
-                    :key="index"
-                    :certificate="certificate"
-                  />
+                    <timeline-certificate
+                      v-for="certificate in certificates"
+                      :key="certificate.issuerName"
+                      :certificate="certificate"
+                      @selected="onSelected"
+                      class="certificate"
+                    />
                   <v-flex xs12 md6 pa-2>
                     <div class="certificate-add">
                       <issuer-selecter />
@@ -65,7 +65,8 @@ export default {
   },
   data: function () {
     return {
-      visible: false
+      visible: false,
+      selectedCertificates: []
     }
   },
   computed: {
@@ -77,19 +78,26 @@ export default {
   },
   methods: {
     ...mapActions({
+      publishCertificates: 'certificate/publishCertificates',
       fetchProofs: 'certificate/fetchProofs'
     }),
     initialize: function () {
       this.fetchProofs()
     },
-    onSave: function () {
-      this.fetchProofs()
+    onPublish: function () {
+      console.log(this.selectedCertificates)
+    },
+    onSelected: function (certificate) {
+      this.selectedCertificates.push(certificate)
     }
   }
 }
 </script>
 
 <style scoped>
+.certificate{
+  pointer-events: none;
+}
 .certificate-add{
   display: flex;
   justify-content: center;
@@ -97,5 +105,8 @@ export default {
   width: 100%;
   height: 20vh;
   border: dashed 1px #489DAB;
+}
+.certificate-text{
+  color: #707070;
 }
 </style>

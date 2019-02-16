@@ -36,6 +36,22 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
+  fetchRequest ({ commit }) {
+    apiClient.fetchRequest().then(response => {
+      console.log(response)
+      const proofs = response.proofs.map(item => {
+        return {
+          issuerName: item.OrgName,
+          issueDate: item.DateTime,
+          detail: '',
+          type: item.Value,
+          issuerSign: item.Verified,
+          userSign: ''
+        }
+      })
+      commit('setCertificates', proofs)
+    })
+  },
   requestIssue ({ commit }) {
     apiClient.requestIssue({ address: 'U9F1B20C8E6DD429A90C090BF39334934' }).then(response => {
       console.log(response)

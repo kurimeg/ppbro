@@ -43,6 +43,16 @@ export default {
     })
   },
 
+  fetchRequest: () => {
+    return new Promise((resolve, reject) => {
+      client.get('/api/account/requestedprofiles/U8F1B20C8E6DD429A90C090BF39334934')
+        .then(res => resolve({ proofs: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
+  },
+
   requestIssue: issuer => {
     return new Promise((resolve, reject) => {
       client.post('/account/profile', issuer)

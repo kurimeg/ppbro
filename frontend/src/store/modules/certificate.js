@@ -2,7 +2,8 @@ import apiClient from '@/api/client.js'
 
 const state = {
   certificates: [],
-  profiles: JSON.parse(localStorage.getItem('profiles')) || []
+  profiles: JSON.parse(localStorage.getItem('profiles')) || [],
+  requestProfiles: []
 }
 
 const mutations = {
@@ -11,8 +12,7 @@ const mutations = {
   },
   addCertificate (state, result) {
     state.certificates.push(result.proof)
-    state.profiles.push(result.profile)
-    localStorage.setItem('profiles', JSON.stringify(state.profiles))
+    localStorage.setItem('requestProfiles', JSON.stringify(result.profile))
   }
 }
 
@@ -49,7 +49,7 @@ const actions = {
           address: respons.profile.Address,
           issureAddress: 'U9F1B20C8E6DD429A90C090BF39334934',
           privateKey: respons.profile.PrivateKey,
-          publickKey: respons.profile.PublickKey
+          publicKey: respons.profile.PublicKey
         }
       }
       commit('addCertificate', result)

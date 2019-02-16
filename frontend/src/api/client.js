@@ -19,5 +19,18 @@ export default {
           reject(new Error(err.response.data.message || err.message))
         })
     })
+  },
+
+  fetchProofs: addresses => {
+    return new Promise((resolve, reject) => {
+      const query = addresses.map(item => item.proofAddress).join('&address=')
+      console.log('/proof?address=' + query)
+      client.get('/proof?address=' + query)
+        .then(res => resolve({ proofs: res.data }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
   }
+
 }

@@ -37,13 +37,15 @@ namespace frontend.API.Services
         {
             var client = CreateBlockchainClient();
 
-            var param = new {
+            var param = new
+            {
                 address,
                 orgAddress,
                 mySign,
                 orgSign,
-                pubkey = publicKey
+                pubKey = publicKey
             };
+
             var json = JsonConvert.SerializeObject(param);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync("/initProfile", content);
@@ -105,7 +107,27 @@ namespace frontend.API.Services
 
         public async Task IssueProof(string id, string address, string value, string orgSign)
         {
+            var client = CreateBlockchainClient();
 
+            var param = new
+            {
+                id,
+                address,
+                value,
+                orgSign
+            };
+            var json = JsonConvert.SerializeObject(param);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("/issueProof", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsAsync<IEnumerable<PostResult>>();
+                if (result.Any(x => x.Status == "SUCCESS"))
+                {
+                    Trace.WriteLine("Issued Proof");
+                }
+            }
+            Trace.WriteLine(response.ToString());
         }
     }
 }

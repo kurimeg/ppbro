@@ -7,10 +7,7 @@ namespace frontend.API.Models.UI
 {
     public class SendProofRequest
     {
-        public string Address;
-        public string LimitDate;
-        public string MySign;
-        public string PubKey;
+        public string TargetOrgAddress;
         public List<string> ProfileAddressList = new List<string>();
     }
 }

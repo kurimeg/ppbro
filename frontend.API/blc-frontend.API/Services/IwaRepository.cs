@@ -68,27 +68,13 @@ namespace frontend.API.Services
             return new List<Profile>();
         }
 
-        public async Task<IEnumerable<Models.Profile>> SendProof(Hashtable param)
+        public async Task SendProofs(Hashtable param)
         {
+            var result = new Hashtable();
             var client = CreateBlockchainClient();
             var json = JsonConvert.SerializeObject(param);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("/getProfileByOrgAddress", content);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsAsync<IEnumerable<RequestedProfile>>();
-                return result.Select(item => {
-                    return new Profile
-                    {
-                        Address = item.Record.Address,
-                        MySign = item.Record.MySign,
-                        OrgAddress = item.Record.OrgAddress,
-                        OrgSign = item.Record.OrgSign,
-                        Proof = item.Record.Proof
-                    };
-                });
-            }
-            return new List<Profile>();
+            var response = await client.PostAsync("/sendProfile", content);
         }
 
         private HttpClient CreateBlockchainClient()

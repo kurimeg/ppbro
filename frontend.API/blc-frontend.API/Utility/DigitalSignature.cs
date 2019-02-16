@@ -76,14 +76,7 @@ namespace frontend.API.Services
 
             var ds = new DigitalSignature(privateKey, publicKey);
 
-            try
-            {
-                ds.dsa = ECDsa.Create(param);
-            }
-            catch
-            {
-                return null;
-            }
+            ds.dsa = ECDsa.Create(param);
 
             return ds;
         }

@@ -11,6 +11,9 @@ namespace frontend.API.Models
         public string OrgAddress;
         public string MySign;
         public string OrgSign;
-        public Proof[] Proof;
+        public List<Proof> Proof = new List<Proof>();
+        public string[] ProfileAddress;
+        public string LimitDate;
+        public string Pubkey;
    }
 }

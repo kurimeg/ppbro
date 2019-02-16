@@ -16,12 +16,9 @@ namespace frontend.API.Controllers
     public class ProfileController : ApiController
     {
         [HttpPost]
-        public async Task<UserProfile> Create(HttpRequestMessage value)
+        public async Task<UserProfile> Create(Issuer issuer)
         {
             ProfileService service = new ProfileService();
-            var param = await value.Content.ReadAsStringAsync();
-            var issuer = JsonConvert.DeserializeObject<Issuer>(param);
-            
             return await service.CreateProfile(issuer.Address);
         }
 

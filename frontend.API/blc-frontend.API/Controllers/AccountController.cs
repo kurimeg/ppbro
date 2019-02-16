@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using frontend.API.Services;
 //using frontend.API.Models.UI;
 using frontend.API.Models;
+using frontend.API.Utility;
 
 namespace frontend.API.Controllers
 {
@@ -23,8 +24,8 @@ namespace frontend.API.Controllers
             byte[] publicKey = ds.PublicKey;
             //return new string[] { "value1", "value2" };
             return new string[] {
-                System.Text.Encoding.ASCII.GetString(privateKey) ,
-                System.Text.Encoding.ASCII.GetString(publicKey) };
+                EncodingUtil.GetEncoding().GetString(privateKey) ,
+                EncodingUtil.GetEncoding().GetString(publicKey) };
         }
 
         // GET: api/Account/5

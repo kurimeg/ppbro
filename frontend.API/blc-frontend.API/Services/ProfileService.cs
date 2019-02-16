@@ -13,21 +13,20 @@ namespace frontend.API.Services
         BlockchainRepository repo = new BlockchainRepository();
         IwaRepository iwarepo = new IwaRepository();
 
-        public async Task<UserProfile> CreateProfile(string issuerName)
+        public async Task<UserProfile> CreateProfile(string issuerAddress)
         {
             DigitalSignature ds = DigitalSignature.Generate();
             var privateKey = Convert.ToBase64String(ds.PrivateKey);
             var publicKey = Convert.ToBase64String(ds.PublicKey);
 
             IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
-            Issuer _issuer = issuers.Where(x => x.Name == issuerName).Select(x => x).FirstOrDefault();//  名前で判定（仮）
+            Issuer _issuer = issuers.Where(x => x.Address == issuerAddress).Select(x => x).FirstOrDefault();
 
             var guid = Guid.NewGuid();
             var address = guid.ToString();
-            var orgAddress = _issuer.Address;
             var mySign = ds.Sign(Guid.NewGuid().ToByteArray());
             var orgSign = "";
-            await repo.InitProfile(address, orgAddress, Convert.ToBase64String(mySign), orgSign, publicKey);
+            await repo.InitProfile(address, issuerAddress, Convert.ToBase64String(mySign), orgSign, publicKey);
 
             return new UserProfile { PrivateKey = privateKey, PublicKey = publicKey, Address = address };
         }
@@ -35,10 +34,10 @@ namespace frontend.API.Services
         public async Task IssueProof(IssueProofRequest param)
         {
             var id = Guid.NewGuid().ToString();
-            var address = param.Address;
+            var address = param.ProfileAddress;
             var value = param.Value;
             IEnumerable<Issuer> issuers = await iwarepo.GetIssuers();
-            Issuer issuer = issuers.Where(x => x.Name == param.Name).Select(x => x).FirstOrDefault();//  名前で判定（仮）
+            Issuer issuer = issuers.Where(x => x.Address == param.IssuerAddress).Select(x => x).FirstOrDefault();
             Profile profile = (await repo.GetProfileByAddresses(new string[] { address })).FirstOrDefault();
             DigitalSignature ds = DigitalSignature.FromKey(Convert.FromBase64String(param.PrivateKey), Convert.FromBase64String(issuer.Pubkey));
             byte[] signedValue = ds.Sign(System.Text.Encoding.ASCII.GetBytes(value));

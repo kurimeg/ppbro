@@ -22,7 +22,7 @@ namespace frontend.API.Controllers
             var param = await value.Content.ReadAsStringAsync();
             var issuer = JsonConvert.DeserializeObject<Issuer>(param);
             
-            return await service.CreateProfile(issuer.Name);
+            return await service.CreateProfile(issuer.Address);
         }
 
         //[HttpGet]

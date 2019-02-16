@@ -1,6 +1,11 @@
 <template>
   <v-layout class="home-background" align-center justify-center fill-height>
     <v-flex xs12>
+      <!-- <v-layout row wrap justify-center>
+        <v-flex xs12 md6 ma-3 class="home-detail">
+          <h1>あなたの経歴はこのアプリが証明します</h1>
+        </v-flex>
+      </v-layout> -->
       <v-layout row wrap justify-center>
         <v-flex xs12 md3 mx-3>
           <v-text-field
@@ -70,5 +75,9 @@ export default {
   /* position: absolute;
   z-index: 2;
   background-image: url('~@/assets/app-image.png'); */
+}
+.home-detail{
+  color: #FFFFFF;
+  white-space:pre-wrap;
 }
 </style>

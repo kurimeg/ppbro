@@ -2,12 +2,16 @@ import apiClient from '@/api/client.js'
 
 const state = {
   certificates: [],
-  profiles: JSON.parse(localStorage.getItem('profiles')) || []
+  profiles: JSON.parse(localStorage.getItem('profiles')) || [],
+  requests: []
 }
 
 const mutations = {
   setCertificates (state, certificates) {
     state.certificates = certificates
+  },
+  setRequests (state, requests) {
+    state.requests = requests
   },
   addCertificate (state, certificate) {
     state.certificates.push(certificate)
@@ -22,6 +26,17 @@ const actions = {
       { issuerName: '情報処理推進機構', issueDate: '2016/10/31', detail: '基本情報技術者', type: '取得', issuerSign: true, userSign: true }
     ]
     commit('setCertificates', certificates)
+  },
+  fetchRequests ({ commit }) {
+    const requests = [
+      { userName: '栗原萌実' },
+      { userName: '鈴木太郎' },
+      { userName: '山田一郎' }
+    ]
+    commit('setRequests', requests)
+  },
+  issueCertificates ({ commit }) {
+
   },
   fetchProofs ({ commit }) {
     apiClient.fetchProofs(state.profiles).then(respons => {

@@ -1,3 +1,5 @@
+import apiClient from '@/api/client.js'
+
 const state = {
   issuers: []
 }
@@ -9,15 +11,20 @@ const mutations = {
 }
 
 const actions = {
-  fetchIssuers ({ commit }, param) {
-    const issuers = [
-      { name: '法政大学', src: '' },
-      { name: '株式会社システムコンサルタント', src: '' },
-      { name: '情報処理推進機構', src: '' },
-      { name: '情報処理推進機構', src: '' }
-    ]
-    commit('setIssuers', issuers)
+  fetchIssuers ({ commit }) {
+    apiClient.fetchIssuers().then(respons => {
+      console.log(respons)
+      const issures = respons.issures.map(item => {
+        return {
+          name: item.Name,
+          src: item.Address,
+          publicKey: item.Pubkey
+        }
+      })
+      commit('setIssuers', issures)
+    })
   },
+
   clearIssuers ({ commit }) {
     commit('setIssuers', [])
   }

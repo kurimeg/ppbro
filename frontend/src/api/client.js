@@ -31,6 +31,16 @@ export default {
           reject(new Error(err.message))
         })
     })
+  },
+
+  fetchIssuers: () => {
+    return new Promise((resolve, reject) => {
+      client.get('/iwa/issuers')
+        .then(res => resolve({ issures: res }))
+        .catch(err => {
+          reject(new Error(err.message))
+        })
+    })
   }
 
 }

@@ -31,21 +31,24 @@ namespace frontend.API.Controllers
 
         [HttpPost]
         [Route("sendproofs")]
-        public async Task<Hashtable> SendProofs([FromBody] List<String> profileAddresses)
+        public async Task<Hashtable> SendProofs([FromBody] List<String> profileAddressList)
         {
             // create cmpany temporary bank account
-           var profile = await _profileService.CreateProfile("temprary");
+           var profile = await _profileService.CreateProfile("公開先企業名");
+
+            var target = string.Join(", ", profileAddressList);
+            var signature = DigitalSignature.FromKey(Convert.FromBase64String(profile.PrivateKey),  Convert.FromBase64String(profile.PublicKey));
+            byte[] signedValue = signature.Sign(System.Text.Encoding.ASCII.GetBytes(target));
 
             // send profiles to temporary bank account
-            var timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             var param = new Hashtable();
             param["address"] = profile.Address;
-            param["limitDate"] = request.LimitDate;
-            param["mySign"] = request.MySign;
-            param["pubKey"] = request.PubKey;
-            param["profileAddressList"] = profileAddresses;
+            param["limitDate"] = DateTime.UtcNow.AddHours(24).ToString("yyyy-MM-dd HHmmss");
+            param["mySign"] = Convert.ToBase64String(signedValue);
+            param["pubKey"] = profile.PublicKey;
+            param["profileAddressList"] = profileAddressList;
 
-            return param
+            return param;
              //await _repository.SendProofs(param);
         }
     }

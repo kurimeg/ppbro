@@ -21,11 +21,11 @@ export default {
     })
   },
 
-  fetchProofs: addresses => {
+  fetchProofs: profiles => {
     return new Promise((resolve, reject) => {
-      const query = addresses.map(item => item.proofAddress).join('&address=')
+      const query = profiles.map(item => item.address).join('&address=')
       console.log('/proof?address=' + query)
-      client.get('/proof?address=' + query)
+      client.get('/proof/a?address=' + query)
         .then(res => resolve({ proofs: res.data }))
         .catch(err => {
           reject(new Error(err.message))

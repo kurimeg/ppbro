@@ -1,48 +1,27 @@
 <template>
-  <v-layout class="home-background" align-center justify-center fill-height>
-    <v-flex xs12>
-      <!-- <v-layout row wrap justify-center>
-        <v-flex xs12 md6 ma-3 class="home-detail">
+  <v-layout class="home-background">
+    <v-layout class="home-background-mask" align-center fill-height>
+    <v-flex xs12 md6>
+      <v-layout row wrap justify-end>
+        <v-flex xs12 md10 ma-3 class="home-detail">
           <h1>あなたの経歴はこのアプリが証明します</h1>
         </v-flex>
-      </v-layout> -->
-      <v-layout row wrap justify-center>
-        <v-flex xs12 md3 mx-3>
-          <v-text-field
-            color="white"
-            v-model="profile.name"
-            label="氏名"
-            required
-            outline
-          ></v-text-field>
-        </v-flex>
-        <v-flex xs12 md3 mx-3>
-          <v-text-field
-            color="white"
-            v-model="profile.mail"
-            label="メールアドレス"
-            required
-            outline
-            type="email"
-          ></v-text-field>
-        </v-flex>
       </v-layout>
-      <v-layout row wrap justify-center>
-        <v-flex xs12 md3 mx-3>
+      <v-layout row wrap justify-end>
+        <v-flex xs12 md5 mx-3>
           <v-btn
-            color="white"
-            outline
+            color="#122D38"
             block
+            outline
             large
-            @click="signup(profile)"
+            @click="signup"
           >
             <strong>はじめる</strong>
           </v-btn>
         </v-flex>
       </v-layout>
     </v-flex>
-    <div class="home-background-image">
-    </div>
+    </v-layout>
   </v-layout>
 </template>
 
@@ -50,14 +29,6 @@
 import { mapActions } from 'vuex'
 
 export default {
-  data: function () {
-    return {
-      profile: {
-        name: '',
-        mail: ''
-      }
-    }
-  },
   methods: {
     ...mapActions({
       signup: 'auth/signup'
@@ -68,16 +39,16 @@ export default {
 
 <style scoped>
 .home-background{
-  position: relative;
-  background: linear-gradient(#F4FFC7, #408C98, #0F2530);
+  background: url('~@/assets/app-image.png'), linear-gradient(#F4FFC7, #408C98, #0F2530);
+  background-position: right;
+  background-repeat: no-repeat;
 }
-.home-background-image{
-  /* position: absolute;
-  z-index: 2;
-  background-image: url('~@/assets/app-image.png'); */
+.home-background-mask{
+  height: 100%;
+  background: rgba(255,255,255,0.3);
 }
 .home-detail{
-  color: #FFFFFF;
+  color: #122D38;
   white-space:pre-wrap;
 }
 </style>

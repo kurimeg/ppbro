@@ -37,7 +37,7 @@
                   v-for="(issuer, index) in issuers"
                   :key="index"
                   avatar
-                  @click="selectIssuer"
+                  @click="selectIssuer(issuer)"
                   >
                     <!-- <v-list-tile-avatar>
                       <img :src="!issuer.src ? require('@/assets/university.svg') : issuer.src">
@@ -89,8 +89,8 @@ export default {
       this.searchWord = ''
       this.clearIssuers()
     },
-    selectIssuer: function () {
-      this.requestIssue()
+    selectIssuer: function (issuer) {
+      this.requestIssue(issuer)
         .then(() => {
         })
         .finally(() => {

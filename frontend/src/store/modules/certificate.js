@@ -54,24 +54,21 @@ const actions = {
       commit('setCertificates', proofs)
     })
   },
-  requestIssue ({ commit }) {
-    apiClient.requestIssue({ address: 'U9F1B20C8E6DD429A90C090BF39334934' }).then(response => {
+  requestIssue ({ commit }, issuer) {
+    debugger
+    apiClient.requestIssue({ address: issuer.src }).then(response => {
+      console.log('requestIssue')
       console.log(response)
       const result = {
         proof: {
-          issuerName: '沖縄大学',
+          issuerName: issuer.name,
           issueDate: '',
           detail: '卒業証明',
           type: '取得',
           issuerSign: false,
           userSign: false
         },
-        profile: {
-          address: response.profile.Address,
-          issureAddress: 'U9F1B20C8E6DD429A90C090BF39334934',
-          privateKey: response.profile.PrivateKey,
-          publicKey: response.profile.PublicKey
-        }
+        profile: response
       }
       commit('addCertificate', result)
       return new Promise((resolve, reject) => {

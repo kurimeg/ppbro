@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Web.Http;
+//using System.Web.Mvc;
 
 namespace frontend.API.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ApiController
     {
-        public ActionResult Index()
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("OK", Encoding.ASCII, "text/plain")
+            });
         }
     }
 }

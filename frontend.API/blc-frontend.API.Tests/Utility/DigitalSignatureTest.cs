@@ -8,7 +8,7 @@ namespace blc_frontend.API.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestSignVerify()
         {
             DigitalSignature ds = DigitalSignature.Generate();
             var priKey = ds.PrivateKey;
@@ -26,13 +26,7 @@ namespace blc_frontend.API.Tests
             DigitalSignature verifier = DigitalSignature.FromKey(pubKey);
             var verified = verifier.Verify(enc.GetBytes(value), Convert.FromBase64String(sign));
 
-            var str = 
-                Convert.ToBase64String(priKey) + "\n" + 
-                Convert.ToBase64String(pubKey) + "\n" +
-                Convert.ToBase64String(enc.GetBytes(value)) + "\n"
-                ;
-
-            Console.WriteLine(verified);
+            Assert.AreEqual(true, verifier.Verify(enc.GetBytes(value), Convert.FromBase64String(sign)));
         }
     }
 }

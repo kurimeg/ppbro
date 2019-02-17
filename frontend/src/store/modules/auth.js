@@ -22,7 +22,7 @@ const actions = {
     }
     commit('storeAccount', account)
     localStorage.setItem('account', JSON.stringify(account))
-    router.push('portfolio')
+    router.push('profile')
   },
   edit ({ commit }, param) {
     commit('storeAccount', param)

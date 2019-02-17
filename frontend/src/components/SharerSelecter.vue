@@ -6,9 +6,11 @@
       transition="dialog-bottom-transition"
   >
     <v-btn
+      fixed
+      bottom
+      right
       fab
       dark
-      small
       color="accent"
       slot="activator"
     >

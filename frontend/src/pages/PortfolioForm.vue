@@ -1,54 +1,37 @@
 <template>
-  <v-dialog v-model="visible" fullscreen hide-overlay transition="dialog-bottom-transition">
-      <v-btn
-        fab
-        dark
-        small
-        color="accent"
-        slot="activator"
-      >
-        <v-icon>edit</v-icon>
-      </v-btn>
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="visible = false">
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-toolbar-title>編集</v-toolbar-title>
-          <v-spacer></v-spacer>
-        </v-toolbar>
-
-        <v-container>
-          <v-layout row wrap>
-            <v-flex xs12 md4 pa-1>
-              <profile
-                :account="account"
-              />
-            </v-flex>
-            <v-flex xs12 md7 offset-md1 pa-1>
-              <h3 class="certificate-text"></h3>
-              <v-container fluid grid-list-sm>
-                <v-layout row wrap>
-                    <timeline-certificate
-                      v-for="certificate in certificates"
-                      :key="certificate.issuerName"
-                      :certificate="certificate"
-                      @selected="onSelected"
-                      class="certificate"
-                    />
-                  <v-flex xs12 md6 pa-2>
-                    <div class="certificate-add">
-                      <issuer-selecter />
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-flex>
-          </v-layout>
-        </v-container>
-
-      </v-card>
-    </v-dialog>
+  <layout-baseline
+    :headerName="this.headerName"
+    :isUser="this.isUser"
+  >
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12 md4 pa-1>
+          <profile
+            :account="account"
+          />
+        </v-flex>
+        <v-flex xs12 md7 offset-md1 pa-1>
+          <h3 class="certificate-text"></h3>
+          <v-container fluid grid-list-sm>
+            <v-layout row wrap>
+                <timeline-certificate
+                  v-for="certificate in certificates"
+                  :key="certificate.issuerName"
+                  :certificate="certificate"
+                  @selected="onSelected"
+                  class="certificate"
+                />
+              <v-flex xs12 md6 pa-2>
+                <div class="certificate-add">
+                  <issuer-selecter />
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </layout-baseline>
 </template>
 
 <script>
@@ -65,7 +48,8 @@ export default {
   },
   data: function () {
     return {
-      visible: false,
+      headerName: 'プロフィール編集',
+      isUser: true,
       selectedCertificates: []
     }
   },

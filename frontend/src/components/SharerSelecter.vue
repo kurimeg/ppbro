@@ -37,20 +37,20 @@
               clearable
               label="公開先"
               append-icon="search"
-              @keydown.enter="fetchSharers"
+              @change="fetchIssuers(searchWord)"
             ></v-text-field>
               <v-list>
                 <v-list-tile
-                  v-for="sharer in sharers"
-                  :key="sharer.name"
+                  v-for="issuer in issuers"
+                  :key="issuer.name"
                 >
 
                   <v-list-tile-action>
-                    <v-checkbox v-model="selectedSharers" :value="sharer"></v-checkbox>
+                    <v-checkbox v-model="selectedSharers" :value="issuer"></v-checkbox>
                   </v-list-tile-action>
 
                   <v-list-tile-content>
-                  <v-list-tile-title v-html="sharer.name"></v-list-tile-title>
+                  <v-list-tile-title v-html="issuer.name"></v-list-tile-title>
                   </v-list-tile-content>
 
                 </v-list-tile>
@@ -94,7 +94,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('sharer', ['sharers']),
+    ...mapState('issuer', ['issuers']),
     ...mapState('certificate', ['certificates'])
   },
   watch: {
@@ -104,13 +104,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchSharers: 'sharer/fetchSharers',
-      clearSharers: 'sharer/clearSharers',
+      fetchIssuers: 'issuer/fetchIssuers',
+      clearIssuers: 'issuer/clearIssuers',
       publishCertificates: 'certificate/publishProofs'
     }),
     initialize: function () {
       this.searchWord = ''
-      this.clearSharers()
+      this.clearIssuers()
     },
     onPublish: function () {
       const param = {

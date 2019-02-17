@@ -13,6 +13,8 @@ const mutations = {
   addCertificate (state, result) {
     state.certificates.push(result.proof)
     localStorage.setItem('requestProfiles', JSON.stringify(result.profile))
+    state.profiles.push({ address: result.profile.Address })
+    localStorage.setItem('profiles', JSON.stringify(state.profiles))
   },
   setSendResult (state, result) {
     localStorage.setItem('sendResult', JSON.stringify(result))
@@ -55,7 +57,6 @@ const actions = {
     })
   },
   requestIssue ({ commit }, issuer) {
-    debugger
     apiClient.requestIssue({ address: issuer.src }).then(response => {
       console.log('requestIssue')
       console.log(response)
@@ -68,7 +69,7 @@ const actions = {
           issuerSign: false,
           userSign: false
         },
-        profile: response
+        profile: response.profile
       }
       commit('addCertificate', result)
       return new Promise((resolve, reject) => {

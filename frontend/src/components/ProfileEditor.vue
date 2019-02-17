@@ -1,8 +1,8 @@
 <template>
   <v-form
-  ref="form"
-  v-model="valid"
-  lazy-validation
+    ref="form"
+    v-model="valid"
+    lazy-validation
   >
     <v-layout row wrap>
       <v-flex offset-xs3 xs6 pb-2>
@@ -35,27 +35,6 @@
         ></v-text-field>
       </v-flex>
     </v-layout>
-      <!-- <v-flex xs12 px-2>
-        <v-menu
-          v-model="datepicker"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="profile.birthday"
-            label="生年月日"
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="profile.birthday" @input="datepicker = false"></v-date-picker>
-        </v-menu>
-      </v-flex> -->
 
     <v-layout row wrap>
       <v-flex xs12 px-2>

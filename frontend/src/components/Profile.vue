@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-flex xs12>
       <div class="profile-container">
-        <img class="profile-image" :src="require('@/assets/profile-image.jpg')"/>
+        <img class="profile-image" :src="photoSrc"/>
       </div>
     </v-flex>
     <v-flex xs12 mt-2>
@@ -17,13 +17,20 @@
       <div class="profile-text profile-detail"><strong>{{ account.detail }}</strong></div>
     </v-flex>
   </v-layout>
-  <!-- <v-divider light></v-divider> -->
 </template>
 
 <script>
 export default {
   props: {
     account: Object
+  },
+  computed: {
+    photoSrc: function () {
+      if (!this.account.photoSrc) {
+        return require('@/assets/baseline-account_box-24px.png')
+      }
+      return this.account.photoSrc
+    }
   }
 }
 </script>

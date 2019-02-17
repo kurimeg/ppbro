@@ -51,9 +51,6 @@
                   <v-list-tile-title v-html="sharer.name"></v-list-tile-title>
                   </v-list-tile-content>
 
-                  <!-- <v-list-tile-action>
-                    <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
-                  </v-list-tile-action> -->
                 </v-list-tile>
               </v-list>
           </v-flex>
@@ -72,23 +69,6 @@
             </v-container>
           </v-flex>
         </v-layout>
-
-
-        <!-- <v-layout row wrap>
-          <v-flex xs12 md7 offset-md1 pa-1>
-            <h3 class="certificate-text">公開するスキルを選択してください</h3>
-            <v-container fluid grid-list-sm>
-              <v-layout row wrap>
-                  <timeline-certificate
-                    v-for="certificate in certificates"
-                    :key="certificate.issuerName"
-                    :certificate="certificate"
-                    @selected="onSelected"
-                  />
-              </v-layout>
-            </v-container>
-          </v-flex>
-        </v-layout> -->
 
       </v-container>
     </v-card>
@@ -131,8 +111,6 @@ export default {
       this.clearSharers()
     },
     onPublish: function () {
-      console.log(this.selectedCertificateKeys)
-      console.log(this.selectedSharers)
       const param = {
         certificateKeys : this.selectedCertificateKeys,
         sharers: this.selectedSharers

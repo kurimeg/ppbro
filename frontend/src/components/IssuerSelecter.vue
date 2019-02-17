@@ -39,9 +39,9 @@
                   avatar
                   @click="selectIssuer"
                   >
-                    <v-list-tile-avatar>
+                    <!-- <v-list-tile-avatar>
                       <img :src="!issuer.src ? require('@/assets/university.svg') : issuer.src">
-                    </v-list-tile-avatar>
+                    </v-list-tile-avatar> -->
 
                     <v-list-tile-content>
                     <v-list-tile-title v-html="issuer.name"></v-list-tile-title>

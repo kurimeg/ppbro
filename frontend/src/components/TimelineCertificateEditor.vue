@@ -48,8 +48,6 @@ export default {
 }
 .certificate-selected {
   border: solid 10px #65BAC4;
-      /* secondary: '#707070',
-    accent: '#65BAC4', */
   box-shadow:
     0px 0px 0px 0px rgba(0,0,0,0.2),
     0px 0px 0px 0px rgba(0,0,0,0.14),
@@ -57,7 +55,6 @@ export default {
 }
 .certificate-container{
   position: relative;
-  /* border: solid 1px #489DAB; */
 }
 .certificate-badge{
   position: absolute;

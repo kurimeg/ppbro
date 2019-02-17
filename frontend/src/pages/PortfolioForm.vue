@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      publishCertificates: 'certificate/publishCertificates',
       fetchProofs: 'certificate/fetchProofs'
     }),
     initialize: function () {

@@ -11,7 +11,7 @@ const mutations = {
 }
 
 const actions = {
-  fetchIssuers ({ commit }) {
+  fetchIssuers ({ commit }, searchWord) {
     apiClient.fetchIssuers().then(respons => {
       console.log(respons)
       const issures = respons.issures.map(item => {
@@ -21,7 +21,9 @@ const actions = {
           publicKey: item.Pubkey
         }
       })
-      commit('setIssuers', issures)
+      const filterdissures = issures.filter(issuer => issuer.name.startsWith(searchWord)
+      )
+      commit('setIssuers', filterdissures)
     })
   },
 

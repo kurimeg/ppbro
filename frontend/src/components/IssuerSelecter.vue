@@ -25,7 +25,7 @@
                 clearable
                 label="発行者名"
                 append-icon="search"
-                @keydown="fetchIssuers"
+                @change="fetchIssuers(searchWord)"
               ></v-text-field>
             </v-flex>
           </v-layout>

@@ -114,9 +114,9 @@ const actions = {
   },
 
   issueProofs ({ commit }, param) {
+    debugger
     apiClient.issueProofs(param).then(response => {
       console.log(response)
-      this.fetchRequests()
     })
   }
 }

@@ -7,19 +7,27 @@
         <strong>{{ certificate.issueDate }}</strong>
       </v-flex>
       <v-flex xs12 md9>
-        {{ certificate.issuerName }}<br/>
-        {{ certificate.detail + ' ' + certificate.type }}
-        <div class="caption"></div>
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex offset-xs6 xs6>
-        <v-chip :color="certificate.issuerSign ? 'accent': 'secondary'" text-color="white">
-          <v-avatar>
-            <v-icon>check_circle</v-icon>
-          </v-avatar>
-          {{ certificate.issuerSign ? '発行者承認済': '発行者要求中' }}
-        </v-chip>
+        <v-flex xs12 class="certificate-container" pa-2>
+        <v-card height="20vh">
+          <v-layout row wrap>
+            <v-flex xs3 md3 pa-2>
+              <v-img
+                :src="!this.certificate.src ? require('@/assets/university.svg') : this.certificate.src"
+                position="left"
+                contain
+              ></v-img>
+            </v-flex>
+            <v-flex xs7 md8 pa-2>
+                {{ certificate.issuerName }}<br/>
+                {{ certificate.detail + ' ' + certificate.type }}
+            </v-flex>
+          </v-layout>
+        </v-card>
+
+        <v-flex v-if="certificate.issuerSign" offset-xs10 xs2 class="certificate-badge">
+          <v-icon color="#FF8160" size="50">fas fa-award</v-icon>
+        </v-flex>
+        </v-flex>
       </v-flex>
     </v-layout>
   </v-timeline-item>
@@ -32,3 +40,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.certificate-container{
+  position: relative;
+}
+.certificate-badge{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>

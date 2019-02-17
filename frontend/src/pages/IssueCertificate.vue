@@ -28,6 +28,7 @@
                   ></v-checkbox>
                 </td>
                 <td>{{ props.item.issuerName }}</td>
+                <td>{{ props.item.detail }}</td>
               </template>
             </v-data-table>
         </v-flex>
@@ -59,6 +60,11 @@ export default {
           text: '要求者名',
           align: 'left',
           value: 'issuerName'
+        },
+        {
+          text: '要求ドキュメント',
+          align: 'left',
+          value: 'detail'
         }
       ],
     }
@@ -76,18 +82,6 @@ export default {
     }),
     initialize: function () {
       this.fetchRequests()
-    },
-    toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.requests.slice()
-    },
-    changeSort (column) {
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
     },
     onIssue () {
       this.issueProofs(this.selected)

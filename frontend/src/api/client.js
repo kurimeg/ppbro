@@ -65,7 +65,7 @@ export default {
         return {
           profileAddress: item.address,
           value: '卒業証明　取得',
-          privateKey: item.privateKey,
+          privateKey: localStorage.getItem('issuerPrivateKey'),
           issuerAddress: 'U4F1B20C8E6DD429A90C090BF39334934'
         }
       }))
